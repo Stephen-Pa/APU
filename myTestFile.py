@@ -17,6 +17,7 @@ from belex_libs.game_of_life import (
 )
 
 from belex_libs.arithmetic import add_u16
+from belex_libs.arithmetic import mul_u16
 from belex_tests.utils import parameterized_belex_test
 
 from collections import deque 
@@ -134,17 +135,17 @@ def placeIntsInVrCorrectWay(Belex, vr: VR, mark_vr: VR):
     section = 0 #section just needs to be consistant, section # doesnt matter
     RL[::] <= 1
     mark_vr[section] <= ~WRL()
-    #place value at section location (position 0)
-    col_mask = Belex.Mask(1)
-    write_to_marked(vr,mark_vr,section,col_mask) #stand alone number represents column numbers
-    #move the marker position to the right 1 place
-    walk_marks_eastward(mark_vr,section)
     #place value at section location (position 3)
     write_to_marked(vr,mark_vr,section,2)
     #move the marker position to the right 1 place
     walk_marks_eastward(mark_vr,section)
+    #place value at section location (position 0)
+    col_mask = Belex.Mask(15)
+    write_to_marked(vr,mark_vr,section,col_mask) #stand alone number represents column numbers
+    #move the marker position to the right 1 place
+    walk_marks_eastward(mark_vr,section)
     #place value at section location (position 2 and 6)
-    write_to_marked(vr,mark_vr,section,"15")
+    write_to_marked(vr,mark_vr,section,"135")
     #move the marker position to the right 1 place
     walk_marks_eastward(mark_vr,section)
     print(str(Belex.glass(vr, plats=16, sections=16)))
@@ -163,14 +164,15 @@ def placeIntsInVrCorrectWay(Belex, vr: VR, mark_vr: VR):
 def placeIntsGen(Belex, vr: VR, temp: VR):
     #while is not correct in actual design i guess? but for testing
     #im going to use one
-    x = 0
+    x = 50
     RL[::] <= 0
     vr[::] <= RL()
     temp[::] <= RL()
     section = 0
     temp[section] <= ~WRL()
-    while x < 10:
-        num = x+1
+    #put in 10 values
+    for _ in range(11):
+        num = x
         col_mask = Belex.Mask(num)
         write_to_marked(vr,temp,section,col_mask)
         walk_marks_eastward(temp,section)
@@ -197,6 +199,200 @@ def addTwoVrs(Belex, dst: VR, vr1: VR, vr2: VR, temp: VR):
 
     '''
 
+@belex_apl
+def multInt(Belex, dst: VR, vr1: VR, vr2: VR, temp: VR):
+    #consider two vrs with one element in each, do mutliply on elements
+    RL[::] <= 0
+    dst[::] <= RL()
+    #considers worst case scenario which two numbers are both 8 bits long
+    #which would be 255*255 = 65025, which is less than the max of 65535
+    #Note: this can be increased, but there can be overflow
+
+    #if loop is problem, loop unravel
+    for _ in range(8):
+        #get which numbers in v2 to be added to sum for mult result
+        RL[0] <= vr1()
+        GL[0] <= RL()
+        RL[::] <= vr2() & GL()
+        #store numbers and add to final
+        temp[::] <= RL()
+        add_u16(dst,temp,dst)
+        #can these two steps be done in parallel with RL and GL?
+        #now shift vr1 down
+        RL[::] <= vr1()
+        vr1[::] <= SRL()
+        #now shift vr2 up
+        RL[::] <= vr2()
+        vr2[::] <= NRL()
+    print(str(Belex.glass(dst, plats=16, sections=16)))
+
+@belex_apl
+def sumVr(Belex, dst: VR):
+    #this method sums the numbers in a VR
+    #x determines how many elements are summed
+    #and can be changed to sum more elements in the VR
+    temp = Belex.VR(0)
+    x = 256
+    while x:
+        RL[::] <= dst()
+        for _ in range(x):
+            temp[::] <= ERL()
+            RL[::] <= temp()
+        #now add
+        add_u16(dst,temp,dst)
+        x = int(x/2)
+
+@belex_apl
+def myMatrixMult(Belex, vec: VR):
+    #performs MAC op on this matrix
+    #             [1 ,2 ,3 ,4 ,5 ,6 ]
+    #             [7 ,8 ,9 ,10,11,12]
+    # [1,2,3,4] * [13,14,15,16,17,18]
+    #             [19,20,21,22,23,24]
+    #result
+    #
+    #
+    # [130,140,150,160,170,180]
+    #
+    c1 = Belex.VR(0)
+    c2 = Belex.VR(0)
+    c3 = Belex.VR(0)
+    c4 = Belex.VR(0)
+    c5 = Belex.VR(0)
+    c6 = Belex.VR(0)
+    dst = Belex.VR(0)
+    temp = Belex.VR(0)
+    mark_vr = Belex.VR(0)
+    #put row vector into vr
+    RL[::] <= 0
+    vec[::] <= RL()
+    mark_vr[::] <= RL()
+    section = 0 #section just needs to be consistant, section # doesnt matter
+    RL[::] <= 1
+    mark_vr[section] <= ~WRL()
+    #fill vrs in each plat, this one is the first plat
+    #(from vec,c1,c2,c3,c4,c5,c6 => 4,19,20,21,22,23,24)
+    col_mask = Belex.Mask(4)
+    write_to_marked(vec,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(19)
+    write_to_marked(c1,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(20)
+    write_to_marked(c2,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(21)
+    write_to_marked(c3,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(22)
+    write_to_marked(c4,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(23)
+    write_to_marked(c5,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(24)
+    write_to_marked(c6,mark_vr,section,col_mask)
+    #finally shift
+    walk_marks_eastward(mark_vr,section)
+    #fill vrs in each plat, this is the second plat
+    #(from vec,c1,c2,c3,c4,c5,c6 => 3,13,14,15,16,17,18)
+    col_mask = Belex.Mask(3)
+    write_to_marked(vec,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(13)
+    write_to_marked(c1,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(14)
+    write_to_marked(c2,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(15)
+    write_to_marked(c3,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(16)
+    write_to_marked(c4,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(17)
+    write_to_marked(c5,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(18)
+    write_to_marked(c6,mark_vr,section,col_mask)
+    #finally shift
+    walk_marks_eastward(mark_vr,section)
+    #fill vrs in each plat, this is third plat
+    #(from vec,c1,c2,c3,c4,c5,c6 => 2,7,8,9,10,11,12)
+    col_mask = Belex.Mask(2)
+    write_to_marked(vec,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(7)
+    write_to_marked(c1,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(8)
+    write_to_marked(c2,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(9)
+    write_to_marked(c3,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(10)
+    write_to_marked(c4,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(11)
+    write_to_marked(c5,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(12)
+    write_to_marked(c6,mark_vr,section,col_mask)
+    #finally shift
+    walk_marks_eastward(mark_vr,section)
+    #fill vrs in each plat, this is the fourth plat
+    #(from vec,c1,c2,c3,c4,c5,c6 => 1,1,2,3,4,5,6)
+    col_mask = Belex.Mask(1)
+    write_to_marked(vec,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(1)
+    write_to_marked(c1,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(2)
+    write_to_marked(c2,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(3)
+    write_to_marked(c3,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(4)
+    write_to_marked(c4,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(5)
+    write_to_marked(c5,mark_vr,section,col_mask)
+    col_mask = Belex.Mask(6)
+    write_to_marked(c6,mark_vr,section,col_mask)
+    #mult the vectors
+    #c1
+    RL[::] <= vec()
+    temp[::] <= RL()
+    multInt(dst,temp,c1,mark_vr)
+    RL[::] <= dst()
+    c1[::] <= RL()
+    #c2
+    RL[::] <= vec()
+    temp[::] <= RL()
+    multInt(dst,temp,c2,mark_vr)
+    RL[::] <= dst()
+    c2[::] <= RL()
+    #c3
+    RL[::] <= vec()
+    temp[::] <= RL()
+    multInt(dst,temp,c3,mark_vr)
+    RL[::] <= dst()
+    c3[::] <= RL()
+    #c4
+    RL[::] <= vec()
+    temp[::] <= RL()
+    multInt(dst,temp,c4,mark_vr)
+    RL[::] <= dst()
+    c4[::] <= RL()
+    #c5
+    RL[::] <= vec()
+    temp[::] <= RL()
+    multInt(dst,temp,c5,mark_vr)
+    RL[::] <= dst()
+    c5[::] <= RL()
+    #c6
+    RL[::] <= vec()
+    temp[::] <= RL()
+    multInt(dst,temp,c6,mark_vr)
+    RL[::] <= dst()
+    c6[::] <= RL()
+    #sum the vrs
+    sumVr(c1)
+    sumVr(c2)
+    sumVr(c3)
+    sumVr(c4)
+    sumVr(c5)
+    sumVr(c6)
+    #results from MAC operation stored in the first plat
+    print(str(Belex.glass(c1, plats=1, sections=16)))
+    print(str(Belex.glass(c2, plats=1, sections=16)))
+    print(str(Belex.glass(c3, plats=1, sections=16)))
+    print(str(Belex.glass(c4, plats=1, sections=16)))
+    print(str(Belex.glass(c5, plats=1, sections=16)))
+    print(str(Belex.glass(c6, plats=1, sections=16)))
+
+
 @parameterized_belex_test
 def test_driver_place(diri: DIRI):
     vr0 = 0
@@ -220,3 +416,49 @@ def test_add_two_vr(diri: DIRI):
     vr2 = 2
     temp = 3
     addTwoVrs(dst,vr1,vr2,temp)
+
+@parameterized_belex_test
+def test_mult(diri: DIRI):
+    #my mult
+    dst = 0
+    vr = 1
+    vr2 = 2
+    temp = 3
+    placeIntsGen(vr,temp)
+    placeIntsGen(vr2,temp)
+    multInt(dst,vr,vr2,temp)
+    #Question:
+    #when i use this multiply that i made, after a certain
+    #magnitude of numbers to be multiplied together (say 50*50)
+    #the following error is thrown:
+    #myTestFile.py::test_mult - RuntimeError: Exhausted SM_REG registers
+    #HOWEVER, the multiplied numbers are correct when numbers multiplied
+    #together will not overflow
+
+@parameterized_belex_test
+def test_mul_u16(diri: DIRI):
+    #artimetic function in belex
+    #gives error as follows: 
+    #myTestFile.py::test_mul_u16 - 
+    #KeyError: 'Register value for RN_REG_12 has not been initialized.'
+    dst = 0
+    vr = 1
+    vr2 = 2
+    temp = 3
+    placeIntsGen(vr,temp)
+    placeIntsGen(vr2,temp)
+    mul_u16(dst,vr,vr2)
+
+@parameterized_belex_test
+def test_add_vr(diri: DIRI):
+    #tests the sumVR method with values from vr filling method
+    dst = 0
+    marker = 1
+    placeIntsInVrCorrectWay(dst,marker)
+    sumVr(dst)
+
+@parameterized_belex_test
+def test_matrix_mult(diri: DIRI):
+    #just initiates the matrix mult with random vector
+    startVec = 0
+    myMatrixMult(startVec)
