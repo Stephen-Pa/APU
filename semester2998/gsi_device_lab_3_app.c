@@ -265,6 +265,16 @@ static int convertFloat16(float a){
 	return fltInt16;
 }
 
+static float convertFloat16Back(int a){
+    int fraction = a & 0x3ff;
+    int exponent = (a&0x7c00)>>10;
+    int sign = (a&0x8000)<<16;
+    float* ptr = NULL;
+    exponent = (exponent - 15) +127;
+    fraction = (sign | (exponent<<23) | (fraction<<13));
+    ptr = (float*)&fraction;
+    return *ptr;
+}
 
 static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uint32_t numVectors, uint32_t numFeatures, int toggleGFloat){
 	//THESE WILL PROBABLY HAVE A PROBLEM WITH TYPES (FLOAT16 -> UNSIGNED INT 16)
@@ -285,7 +295,6 @@ static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uin
 			else{
 				vector[(i*numFeatures)+j] = convertFloat16(dummy);
 			}
-			vector[(i*numFeatures)+j] = convertGSIFloat(dummy);
         }
         if (fscanf(fileWeights, "%f", &dummy) != 1) {
                 fprintf(stderr, "Error reading file, at line %i\n",i);
@@ -431,7 +440,7 @@ int main(int argc, char *argv[])
 	printf("Dynamically mapped memory = %0.1fG\n", (float)dynamic_mapped_size_recv / 1024L / 1024L / 1024L);
 	
 	//BEGIN MY CODE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-	int toggleGFloat = 1;
+	int toggleGFloat = 0;
 
 	uint16_t *supportVectors= NULL, *testData = NULL, *weights = NULL, *classVector = NULL;
 	uint16_t gamma = 0.0, intercept = 0.0;
@@ -486,7 +495,12 @@ int main(int argc, char *argv[])
 	printf("\n");
 	*/
 	for(uint32_t i = 0; i < 4; i++){
-		printf("%f ",convertGSIFloatBack(classVector[i]));
+		if(toggleGFloat){
+			printf("%f ",convertGSIFloatBack(classVector[i]));
+		}
+		else{
+			printf("%f ",convertFloat16Back(classVector[i]));
+		}
 		//printf("%x ",classVector[i]);
 	}
 	printf("\n");

@@ -91,19 +91,16 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			gvml_load_16(vr_supportVectors, f);
 			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
 			//get difference in points
-			gvml_sub_gf16(vr_supportVectors, vr_supportVectors, vr_testData);
+			gvml_sub_f16(vr_supportVectors, vr_supportVectors, vr_testData);
 			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
 			//square term
-			gvml_mul_gf16(vr_supportVectors, vr_supportVectors, vr_supportVectors);
-			*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
-			//add value to distance
-			gvml_add_gf16(vr_distances, vr_distances, vr_supportVectors);
+			gvml_mul_f16(vr_supportVectors, vr_supportVectors, vr_supportVectors);
 			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
-			if(f==0){
-				return 0;
-			}
+			//add value to distance
+			gvml_add_f16(vr_distances, vr_distances, vr_supportVectors);
+			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
 		}
-		//*(outputValues) = gvml_get_entry_16(vr_distances, 0);
+		*(outputValues) = gvml_get_entry_16(vr_distances, 0);
 		return 0;
 		//TESTING PURPOSES ONLY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		/*
