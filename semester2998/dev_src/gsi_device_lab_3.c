@@ -52,104 +52,108 @@ static int load_SVM(struct gd_load_SVM *load_SVM_data)
 
 static int do_classification(struct gd_classify_testData *classify_data)
 {
-	//Concerns:
-	// 1. is setting the GAL_L2DMA_MODE_DIRECT will mess things up
-	// 2. 
 	enum gvml_vr16 vr_distances = GVML_VR16_1;
 	enum gvml_vr16 vr_supportVectors = GVML_VR16_2;
 	enum gvml_vr16 vr_testData = GVML_VR16_3;
 	enum gvml_vr16 vr_intercept = GVML_VR16_4;
 	enum gvml_vr16 vr_weights = GVML_VR16_5;
 	enum gvml_vr16 vr_gamma = GVML_VR16_6;
-	enum gvml_vr16 vr_ones = GVML_VR16_7;
-	enum gvml_vr16 vr_temp = GVML_VR16_8;
+	enum gvml_vr16 vr_temp = GVML_VR16_7;
+	enum gvml_mrks_n_flgs marker = GVML_MRK1;
 
 	const uint16_t *testInputs = gal_mem_handle_to_apu_ptr(classify_data->testData);
 	const uint16_t *weights = gal_mem_handle_to_apu_ptr(classify_data->weights);
 	uint16_t *outputValues = gal_mem_handle_to_apu_ptr(classify_data->classification);
-	uint32_t shiftNumber = (g_SVM_data.num_support_vectors%4)?((uint32_t)(g_SVM_data.num_support_vectors/4)):((g_SVM_data.num_support_vectors/4)-1);
-	uint16_t verdict = 0;
+	uint32_t shiftNumber = 1;
+	uint32_t shiftNumberChange = 0;
+	uint32_t verdict = g_SVM_data.num_support_vectors;
+	uint32_t zeroNumber = (g_SVM_data.num_support_vectors%4)?(((uint32_t)(g_SVM_data.num_support_vectors/4))+1):((g_SVM_data.num_support_vectors/4));
 
+	while(verdict){
+		verdict>>=1;
+		shiftNumber*=2;
+	}
+
+	//put the weight values into a vr
+	gvml_cpy_imm_16(vr_weights,0);
 	gal_set_l2dma_dma_mode(GAL_L2DMA_MODE_DIRECT);
     direct_dma_l4_to_l1_32k(GVML_VM_47, weights);
 	gvml_load_16(vr_weights, GVML_VM_47);
+	//use this marker vr to make all entries except for zeroNumber spaces
+	//from the head of the vr 0 beacuse some of them are not going to be after
+	//during the SVM calculation
+	gvml_set_m(marker);
+	gvml_shift_tail_imm_m_m1_g2k(marker, marker, zeroNumber);
+	gvml_cpy_imm_16_msk_mrk(vr_weights, 0, 0xffff, marker);
 
-	//before calc
+	//put the gamma and intercept
 	gvml_cpy_imm_16(vr_gamma, classify_data->gamma);
 	gvml_cpy_imm_16(vr_intercept, classify_data->intercept);
-	gvml_cpy_imm_16(vr_ones, 1);
-	//put the weights into the vr...
-
 
 	for (uint32_t q = 0; q < classify_data->num_testData; ++q, testInputs += g_SVM_data.num_features) {
 		gvml_reset_16(vr_distances);
 		for (uint32_t f = 0; f < g_SVM_data.num_features; ++f) {
 			//copy one value into all spots
 			gvml_cpy_imm_16(vr_testData, testInputs[f]);
-			//i think this is load values from a numbered VMR into vr
-			//*(outputValues) = testInputs[f];
+			//get vmr data and put into supportVectors vr
 			gvml_load_16(vr_supportVectors, f);
-			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
 			//get difference in points
 			gvml_sub_f16(vr_supportVectors, vr_supportVectors, vr_testData);
-			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
 			//square term
 			gvml_mul_f16(vr_supportVectors, vr_supportVectors, vr_supportVectors);
-			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
 			//add value to distance
 			gvml_add_f16(vr_distances, vr_distances, vr_supportVectors);
-			//*(outputValues) = gvml_get_entry_16(vr_supportVectors, 0);
 		}
-		*(outputValues) = gvml_get_entry_16(vr_distances, 0);
-		return 0;
-		//TESTING PURPOSES ONLY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		/*
-		for(uint32_t i = 0; i < g_SVM_data.num_support_vectors; i++){
-			*(outputValues+i) = gvml_get_entry_16(vr_distances, i);
-		}
-		return 0;
-		*/
-		//TESTING PURPOSES ONLY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		//mult by gamma
-		gvml_mul_gf16(vr_distances, vr_distances, vr_gamma);
-		//now do sudo exponential (1/(x+1))
-		//there is the function gvml_exp_f16() -> but for regular float
-		//consider this later
-		gvml_add_gf16(vr_distances, vr_distances, vr_ones);
-		gvml_reciprocal_gf16(vr_distances, vr_distances);
+		gvml_mul_f16(vr_distances, vr_distances, vr_gamma);
+		//exponential
+		gvml_exp_f16(vr_distances, vr_distances);
 		//multiply by weights
-		gvml_mul_gf16(vr_distances, vr_distances, vr_weights);
-		
+		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
+
 		//now summ the vr
-		for(uint32_t i = 0; i < shiftNumber; i++){
-			//shifts by 4 positions
-			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumber);
-			gvml_add_gf16(vr_distances, vr_distances, vr_temp);
+		shiftNumberChange = shiftNumber;
+		while(shiftNumberChange>>4){
+			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, (shiftNumberChange>>3));
+			gvml_add_f16(vr_distances, vr_distances, vr_temp);
+			shiftNumberChange>>=1;
 		}
+		//last sum is a problem there isnt a last sum for the 
+		gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, 1);
+		gvml_add_f16(vr_distances, vr_distances, vr_temp);
+
 		//now need to add the last 4 values
 		gvml_shift_head_imm_16_grp(vr_testData, vr_distances, 2, 2, vr_temp);
-		gvml_add_gf16(vr_testData, vr_distances, vr_testData);
+		gvml_add_f16(vr_testData, vr_distances, vr_testData);
 		gvml_shift_head_imm_16_grp(vr_distances, vr_testData, 1, 1, vr_temp);
-		gvml_add_gf16(vr_distances, vr_distances, vr_testData);
-		gvml_add_gf16(vr_distances, vr_distances, vr_intercept);
+		gvml_add_f16(vr_distances, vr_distances, vr_testData);
+		//add the intercept
+		gvml_add_f16(vr_distances, vr_distances, vr_intercept);
 		//last value in first position
 		verdict = gvml_get_entry_16(vr_distances, 0);
-
+		
 		//determine class
 		//if negative, class 0
 		if(verdict & 0x8000){
-			*(outputValues+q) = 0;
+			//gsi_info("0\n");
+			//*(outputValues+q) = 0;
 		}
 		else{
-			*(outputValues+q) = 1;
+			//gsi_info("1\n");
+			//*(outputValues+q) = 1;
 		}
 		
 	}
 
 	return 0;
 }
-
+/*
+if(q==2){
+	gvml_get_16_32k(outputValues,vr_distances);
+	return 0;
+}
+*/
 
 GAL_TASK_ENTRY_POINT(gd_lab_3, in, out)
 {

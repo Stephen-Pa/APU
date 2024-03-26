@@ -117,7 +117,7 @@ static int do_classification(
 	gdl_mem_handle_t dev_cmd_buf = GDL_MEM_HANDLE_NULL, io_dev_bufs = GDL_MEM_HANDLE_NULL;
 	
 	uint64_t testData_size = sizeof(*testData) * num_testData * num_features;
-	uint64_t output_size = sizeof(*classVector) * num_testData;
+	uint64_t output_size = sizeof(*classVector)* num_supportVectors *5;//CHANGE THIS LATER
 
 	//get weight matrix
 	uint16_t *pre_process_weights = NULL;
@@ -126,6 +126,7 @@ static int do_classification(
 	gd_lab_3_preprocess_db(pre_process_weights, weights, 1, num_supportVectors);
 
 	uint64_t io_dev_buf_size = testData_size + output_size + weight_size;
+	printf("Size of Buf: %i\n",io_dev_buf_size);
 
 	//allocate all the memory you will need for all input and output you have
 	//in this case, need space for testData, weights, and output
@@ -179,6 +180,7 @@ static int do_classification(
 		goto CLEAN_UP;
 	}
 	printf("Index of testData Pointer: %x\nIndex of Weights Pointer: %x\nIndex of Output Pointer: %x\n",cmd.classify_data.testData,cmd.classify_data.weights,cmd.classify_data.classification);
+	
 	uint64_t cmd_buf_size = sizeof(cmd);
 	dev_cmd_buf = gdl_mem_alloc_aligned(ctx_id, cmd_buf_size, GDL_CONST_MAPPED_POOL, GDL_ALIGN_32);
 	if (gdl_mem_handle_is_null(dev_cmd_buf)) {
@@ -449,7 +451,7 @@ int main(int argc, char *argv[])
 	supportVectors = malloc(sizeof(uint16_t) * args.num_support_vectors * args.num_features);
 	weights = malloc(sizeof(uint16_t) * args.num_support_vectors);
 	testData = malloc(sizeof(uint16_t) * args.num_testData * args.num_features);
-	classVector = malloc(sizeof(uint16_t) * args.num_testData);
+	classVector = malloc(sizeof(uint16_t) * args.num_support_vectors *5);
 
 	if (NULL == supportVectors || NULL == testData || NULL == weights) {
 		gsi_error("malloc failed");
@@ -460,8 +462,8 @@ int main(int argc, char *argv[])
 	//load support vectors and weights from files
 	getSupportVectorsAndWeights(supportVectors, weights, args.num_support_vectors, args.num_features, toggleGFloat);
 	printf("Obtained Support Vectors and Weights\n");
-	//printf("First 5 of supportVectors: %f %f %f %f %f\n",convertGSIFloatBack(*(supportVectors)),convertGSIFloatBack(*(supportVectors+1)),convertGSIFloatBack(*(supportVectors+2)),convertGSIFloatBack(*(supportVectors+3)),convertGSIFloatBack(*(supportVectors+4)));
-	//printf("First 5 of weights: %f %f %f %f %f\n",convertGSIFloatBack(*(weights)),convertGSIFloatBack(*(weights+1)),convertGSIFloatBack(*(weights+2)),convertGSIFloatBack(*(weights+3)),convertGSIFloatBack(*(weights+4)));
+	printf("First 5 of supportVectors: %f %f %f %f %f\n",convertFloat16Back(*(supportVectors)),convertFloat16Back(*(supportVectors+1)),convertFloat16Back(*(supportVectors+2)),convertFloat16Back(*(supportVectors+3)),convertFloat16Back(*(supportVectors+4)));
+	printf("First 5 of weights: %f %f %f %f %f\n",convertFloat16Back(*(weights)),convertFloat16Back(*(weights+1)),convertFloat16Back(*(weights+2)),convertFloat16Back(*(weights+3)),convertFloat16Back(*(weights+4)));
 	//this part is going to load the support vectors onto the device
 	printf("Loading SVM ...\n");
 	ret = load_SVM(valid_ctx_id, supportVectors, args.num_support_vectors, args.num_features);
@@ -477,9 +479,9 @@ int main(int argc, char *argv[])
 	//load test data
 	getTestDataAndOthers(testData, &gamma, &intercept, args.num_testData, args.num_features, toggleGFloat);
 	printf("Obtained Test Data and Other Data\n");
-	//printf("First 5 of TestData: %f %f %f %f %f\n",convertGSIFloatBack(*(testData)),convertGSIFloatBack(*(testData+1)),convertGSIFloatBack(*(testData+2)),convertGSIFloatBack(*(testData+3)),convertGSIFloatBack(*(testData+4)));
-	//printf("Gamma: %f\n",convertGSIFloatBack(gamma));
-	//printf("Intercept: %f\n",convertGSIFloatBack(intercept));
+	printf("First 5 of TestData: %f %f %f %f %f\n",convertFloat16Back(*(testData)),convertFloat16Back(*(testData+1)),convertFloat16Back(*(testData+2)),convertFloat16Back(*(testData+3)),convertFloat16Back(*(testData+4)));
+	printf("Gamma: %f\n",convertFloat16Back(gamma));
+	printf("Intercept: %f\n",convertFloat16Back(intercept));
 	ret = do_classification(valid_ctx_id, classVector, testData, weights, gamma, intercept, args.num_testData, args.num_features, args.num_support_vectors);
 		if (ret) {
 			gsi_error("do_search() failed with %d", ret);
@@ -494,12 +496,15 @@ int main(int argc, char *argv[])
 	}
 	printf("\n");
 	*/
-	for(uint32_t i = 0; i < 4; i++){
+	for(uint32_t i = 0; i < 66; i++){
+		//printf("%i\n",classVector[i]);
 		if(toggleGFloat){
-			printf("%f ",convertGSIFloatBack(classVector[i]));
+			printf("%i: %f \n",i+1,convertGSIFloatBack(classVector[i]));
+			//printf("%i: %x \n",i+1,classVector[i]);
 		}
 		else{
-			printf("%f ",convertFloat16Back(classVector[i]));
+			printf("%i: %f \n",i+1,convertFloat16Back(classVector[i]));
+			//printf("%i: %x \n",i+1,classVector[i]);
 		}
 		//printf("%x ",classVector[i]);
 	}
