@@ -14,11 +14,13 @@ GDL_TASK_DECLARE(gd_lab_3);
 #include "gsi_device_lab_3.h"
 
 //GO THROUGH ALL OF THIS AND FREE MEMEORY ACCORDINGLY
-
 static int load_SVM(
 	//here are the arguments
 	gdl_context_handle_t ctx_id,
 	uint16_t supportVectors[],
+	uint16_t weights[],
+	uint32_t gamma,
+	uint32_t intercept,
 	uint32_t num_supportVectors,
 	uint32_t num_features)
 {
@@ -26,6 +28,8 @@ static int load_SVM(
 	gdl_mem_handle_t dev_cmd_buf = GDL_MEM_HANDLE_NULL, dev_supportVector_buf = GDL_MEM_HANDLE_NULL;
 	uint16_t *pre_processed_SVM = NULL;
 	uint64_t pre_processed_SVM_size = gd_lab_3_get_preprocessed_db_size(num_features);
+	uint64_t weight_size = gd_lab_3_get_preprocessed_db_size(1);
+	uint64_t total_size = weight_size + pre_processed_SVM_size;
 
 	pre_processed_SVM = malloc(pre_processed_SVM_size);
 	if (NULL == pre_processed_SVM) {
@@ -41,7 +45,7 @@ static int load_SVM(
 	//[1,9,0,0,...,2,10,0,0,...,3,11,0,0,...,4,12,0,0,...]
 	gd_lab_3_preprocess_db(pre_processed_SVM, supportVectors, num_features, num_supportVectors);
 
-	dev_supportVector_buf = gdl_mem_alloc_aligned(ctx_id, pre_processed_SVM_size, GDL_CONST_MAPPED_POOL, GDL_ALIGN_32);
+	dev_supportVector_buf = gdl_mem_alloc_aligned(ctx_id, total_size, GDL_CONST_MAPPED_POOL, GDL_ALIGN_32);
 	if (gdl_mem_handle_is_null(dev_supportVector_buf)) {
 		gsi_error("gdl_mem_alloc() failed to allocate %lu bytes", pre_processed_SVM_size);
 		ret = gsi_status(ENOMEM);
@@ -58,10 +62,26 @@ static int load_SVM(
 		.cmd = GD_CMD_LOAD_SVM,
 		.load_SVM_data = {
 			.supportVectors = dev_supportVector_buf,
+			.gamma = gamma,
+			.intercept = intercept,
 			.num_support_vectors = num_supportVectors,
 			.num_features = num_features
 		}
 	};
+
+
+	//get memory handle for weights and copy weights to it
+	ret = gdl_add_to_mem_handle(&cmd.load_SVM_data.weights, cmd.load_SVM_data.supportVectors, pre_processed_SVM_size);
+	if (ret) {
+		gsi_error("gdl_add_to_mem_handle() failed: %s", gsi_status_errorstr(ret));
+		goto CLEAN_UP;
+	}
+
+	ret = gdl_mem_cpy_to_dev(cmd.load_SVM_data.weights, weights, weight_size);
+	if (ret) {
+		gsi_error("gdl_mem_cpy_to_dev() failed: %s", gsi_status_errorstr(ret));
+		goto CLEAN_UP;
+	}
 
 	uint64_t cmd_buf_size = sizeof(cmd);
 	dev_cmd_buf = gdl_mem_alloc_aligned(ctx_id, cmd_buf_size, GDL_CONST_MAPPED_POOL, GDL_ALIGN_32);
@@ -106,9 +126,6 @@ static int do_classification(
 	gdl_context_handle_t ctx_id,
 	uint16_t classVector[],
 	const uint16_t testData[],
-	const uint16_t weights[],
-	uint32_t gamma,
-	uint32_t intercept,
 	uint32_t num_testData,
 	uint32_t num_features,
 	uint32_t num_supportVectors)
@@ -117,16 +134,16 @@ static int do_classification(
 	gdl_mem_handle_t dev_cmd_buf = GDL_MEM_HANDLE_NULL, io_dev_bufs = GDL_MEM_HANDLE_NULL;
 	
 	uint64_t testData_size = sizeof(*testData) * num_testData * num_features;
-	uint64_t output_size = sizeof(*classVector)* num_supportVectors *5;//CHANGE THIS LATER
-
+	uint64_t output_size = sizeof(*classVector)* num_testData;
+	/*
 	//get weight matrix
 	uint16_t *pre_process_weights = NULL;
 	uint64_t weight_size = gd_lab_3_get_preprocessed_db_size(1);
 	pre_process_weights = malloc(weight_size);
 	gd_lab_3_preprocess_db(pre_process_weights, weights, 1, num_supportVectors);
+	*/
 
-	uint64_t io_dev_buf_size = testData_size + output_size + weight_size;
-	printf("Size of Buf: %i\n",io_dev_buf_size);
+	uint64_t io_dev_buf_size = testData_size + output_size;
 
 	//allocate all the memory you will need for all input and output you have
 	//in this case, need space for testData, weights, and output
@@ -151,35 +168,16 @@ static int do_classification(
 		.classify_data = {
 			.testData = io_dev_bufs,
 			.num_testData = num_testData,
-			.gamma = gamma,
-			.intercept = intercept
 		}
 	};
 
-	//now, use the current pointer to the beinging of the io_dev_buf (now cmd.classify_data.testData)
-	//and consider a new pointer that is the length of testData_size away
-	//this spot is where we will start putting weight data
-	ret = gdl_add_to_mem_handle(&cmd.classify_data.weights, cmd.classify_data.testData, testData_size);
-	if (ret) {
-		gsi_error("gdl_add_to_mem_handle() failed: %s", gsi_status_errorstr(ret));
-		goto CLEAN_UP;
-	}
-
-	//copy weight data to IO buffer
-	ret = gdl_mem_cpy_to_dev(cmd.classify_data.weights, weights, weight_size);
-	if (ret) {
-		gsi_error("gdl_mem_cpy_to_dev() failed: %s", gsi_status_errorstr(ret));
-		goto CLEAN_UP;
-	}
-
 	//same concept as above, but now weight_size away and new pointer is the classification output
 	//no mem copy becuase this pointer is where we are going to store out output
-	ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.weights, weight_size);
+	ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.testData, testData_size);
 	if (ret) {
 		gsi_error("gdl_add_to_mem_handle() failed: %s", gsi_status_errorstr(ret));
 		goto CLEAN_UP;
 	}
-	printf("Index of testData Pointer: %x\nIndex of Weights Pointer: %x\nIndex of Output Pointer: %x\n",cmd.classify_data.testData,cmd.classify_data.weights,cmd.classify_data.classification);
 	
 	uint64_t cmd_buf_size = sizeof(cmd);
 	dev_cmd_buf = gdl_mem_alloc_aligned(ctx_id, cmd_buf_size, GDL_CONST_MAPPED_POOL, GDL_ALIGN_32);
@@ -278,19 +276,21 @@ static float convertFloat16Back(int a){
     return *ptr;
 }
 
-static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uint32_t numVectors, uint32_t numFeatures, int toggleGFloat){
-	//THESE WILL PROBABLY HAVE A PROBLEM WITH TYPES (FLOAT16 -> UNSIGNED INT 16)
-
+static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uint32_t* gamma, uint32_t* intercept, uint32_t numVectors, uint32_t numFeatures, int toggleGFloat){
 	//gets support vectors and weights for each
 	float dummy = 0;
 	FILE *fileVectors = fopen("./supportVectors.txt", "r");
 	FILE *fileWeights = fopen("./supportWeights.txt", "r");
+	FILE *fileGamma = fopen("./supportGamma.txt", "r");
+	FILE *fileIntercept = fopen("./supportIntercept.txt", "r");
 	//Read data from file
     for (uint32_t i = 0; i < numVectors; i++) {
         for (uint32_t j = 0; j < numFeatures; j++) {
             if (fscanf(fileVectors, "%f", &dummy) != 1) {
-                fprintf(stderr, "Error reading file, at line %i\n",i);
+                fprintf(stderr, "Error reading support vectors file, at line %i, element: %i\n",i,j);
+				exit(69);
             }
+			//printf("support value: %f\n",dummy);
 			if(toggleGFloat){
 				vector[(i*numFeatures)+j] = convertGSIFloat(dummy);
 			}
@@ -299,7 +299,8 @@ static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uin
 			}
         }
         if (fscanf(fileWeights, "%f", &dummy) != 1) {
-                fprintf(stderr, "Error reading file, at line %i\n",i);
+                fprintf(stderr, "Error reading weights file, at line %i\n",i);
+				exit(69);
         }
 		if(toggleGFloat){
 			weights[i] = convertGSIFloat(dummy);
@@ -310,13 +311,35 @@ static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uin
     }
     fclose(fileVectors);
 	fclose(fileWeights);
+
+	//get the two one value parameters
+    if(fscanf(fileGamma, "%f", &dummy) != 1){
+        fprintf(stderr, "Error reading Gamma file\n");
+		exit(69);
+    }
+	if(toggleGFloat){
+		*gamma = convertGSIFloat(dummy);
+	}
+	else{
+		*gamma = convertFloat16(dummy);
+	}
+    if(fscanf(fileIntercept, "%f", &dummy) != 1){
+        fprintf(stderr, "Error reading Intercept file\n");
+		exit(69);
+    }
+	if(toggleGFloat){
+		*intercept = convertGSIFloat(dummy);
+	}
+	else{
+		*intercept = convertFloat16(dummy);
+	}
+    fclose(fileGamma);
+    fclose(fileIntercept);
 }
 
-static void getTestDataAndOthers(uint16_t* testData, uint16_t* gamma, uint16_t* intercept, uint32_t numTestData, uint32_t numFeatures, int toggleGFloat){
+static void getTestDataAndOthers(uint16_t* testData, uint32_t numTestData, uint32_t numFeatures, int toggleGFloat){
 	float dummy = 0;
 	FILE *fileTestData = fopen("./supportTestData.txt", "r");
-	FILE *fileGamma = fopen("./supportGamma.txt", "r");
-	FILE *fileIntercept = fopen("./supportIntercept.txt", "r");
 	//Read test data from file
     for (uint32_t i = 0; i < numTestData; i++) {
         for (uint32_t j = 0; j < numFeatures; j++) {
@@ -332,28 +355,6 @@ static void getTestDataAndOthers(uint16_t* testData, uint16_t* gamma, uint16_t* 
         }
     }
     fclose(fileTestData);
-
-	//get the two one value parameters
-    if(fscanf(fileGamma, "%f", &dummy) != 1){
-        fprintf(stderr, "Error reading Gamma file\n");
-    }
-	if(toggleGFloat){
-		*gamma = convertGSIFloat(dummy);
-	}
-	else{
-		*gamma = convertFloat16(dummy);
-	}
-    if(fscanf(fileIntercept, "%f", &dummy) != 1){
-        fprintf(stderr, "Error reading Intercept file\n");
-    }
-	if(toggleGFloat){
-		*intercept = convertGSIFloat(dummy);
-	}
-	else{
-		*intercept = convertFloat16(dummy);
-	}
-    fclose(fileGamma);
-    fclose(fileIntercept);
 }
 
 struct lab_3_args {
@@ -374,7 +375,7 @@ static int parse_args(struct lab_3_args *args, int argc, char *argv[])
 	args->num_testData = atoi(argv[3]);
 
 	printf("****************** ARGS ******************\n");
-	printf("num_records = %u\n", args->num_support_vectors);
+	printf("num_supportVectors = %u\n", args->num_support_vectors);
 	printf("num_features = %u\n", args->num_features);
 	printf("num_testData = %u\n", args->num_testData);
 	printf("******************************************\n");
@@ -445,7 +446,7 @@ int main(int argc, char *argv[])
 	int toggleGFloat = 0;
 
 	uint16_t *supportVectors= NULL, *testData = NULL, *weights = NULL, *classVector = NULL;
-	uint16_t gamma = 0.0, intercept = 0.0;
+	uint32_t gamma = 0.0, intercept = 0.0;
 
 
 	supportVectors = malloc(sizeof(uint16_t) * args.num_support_vectors * args.num_features);
@@ -460,13 +461,11 @@ int main(int argc, char *argv[])
 	}
 
 	//load support vectors and weights from files
-	getSupportVectorsAndWeights(supportVectors, weights, args.num_support_vectors, args.num_features, toggleGFloat);
+	getSupportVectorsAndWeights(supportVectors, weights, &gamma, &intercept, args.num_support_vectors, args.num_features, toggleGFloat);
 	printf("Obtained Support Vectors and Weights\n");
-	printf("First 5 of supportVectors: %f %f %f %f %f\n",convertFloat16Back(*(supportVectors)),convertFloat16Back(*(supportVectors+1)),convertFloat16Back(*(supportVectors+2)),convertFloat16Back(*(supportVectors+3)),convertFloat16Back(*(supportVectors+4)));
-	printf("First 5 of weights: %f %f %f %f %f\n",convertFloat16Back(*(weights)),convertFloat16Back(*(weights+1)),convertFloat16Back(*(weights+2)),convertFloat16Back(*(weights+3)),convertFloat16Back(*(weights+4)));
 	//this part is going to load the support vectors onto the device
 	printf("Loading SVM ...\n");
-	ret = load_SVM(valid_ctx_id, supportVectors, args.num_support_vectors, args.num_features);
+	ret = load_SVM(valid_ctx_id, supportVectors, weights, gamma, intercept, args.num_support_vectors, args.num_features);
 	if (ret) {
 		gsi_error("load_SVM() failed with %d", ret);
 		goto CLEAN_UP;
@@ -477,12 +476,9 @@ int main(int argc, char *argv[])
 	//doing multiple searches
 
 	//load test data
-	getTestDataAndOthers(testData, &gamma, &intercept, args.num_testData, args.num_features, toggleGFloat);
+	getTestDataAndOthers(testData, args.num_testData, args.num_features, toggleGFloat);
 	printf("Obtained Test Data and Other Data\n");
-	printf("First 5 of TestData: %f %f %f %f %f\n",convertFloat16Back(*(testData)),convertFloat16Back(*(testData+1)),convertFloat16Back(*(testData+2)),convertFloat16Back(*(testData+3)),convertFloat16Back(*(testData+4)));
-	printf("Gamma: %f\n",convertFloat16Back(gamma));
-	printf("Intercept: %f\n",convertFloat16Back(intercept));
-	ret = do_classification(valid_ctx_id, classVector, testData, weights, gamma, intercept, args.num_testData, args.num_features, args.num_support_vectors);
+	ret = do_classification(valid_ctx_id, classVector, testData, args.num_testData, args.num_features, args.num_support_vectors);
 		if (ret) {
 			gsi_error("do_search() failed with %d", ret);
 			goto CLEAN_UP;
@@ -496,19 +492,31 @@ int main(int argc, char *argv[])
 	}
 	printf("\n");
 	*/
-	for(uint32_t i = 0; i < 66; i++){
-		//printf("%i\n",classVector[i]);
-		if(toggleGFloat){
-			printf("%i: %f \n",i+1,convertGSIFloatBack(classVector[i]));
-			//printf("%i: %x \n",i+1,classVector[i]);
-		}
-		else{
-			printf("%i: %f \n",i+1,convertFloat16Back(classVector[i]));
-			//printf("%i: %x \n",i+1,classVector[i]);
-		}
+	int print20 = 0;
+	if(print20){
+		printf("[ ");
+		for(uint32_t i = 0; i < 20; i++){
+			//printf("%i\n",classVector[i]);
+			if(toggleGFloat){
+				//printf("%i: %f \n",i+1,convertGSIFloatBack(classVector[i]));
+				printf("%x ",classVector[i]);
+			}
+			else{
+				//printf("%i: %f \n",i+1,convertFloat16Back(classVector[i]));
+				printf("%x ",classVector[i]);
+			}
 		//printf("%x ",classVector[i]);
 	}
-	printf("\n");
+	printf("]\n");	
+	}
+	else{
+		//print values to text file
+		FILE *fileOut = fopen("./output.txt", "w");
+		for(int i = 0; i < args.num_testData; i++){
+			//fprintf(fileOut,"%x\n",classVector[i]);
+			fprintf(fileOut,"%x\n",classVector[i]);
+		}
+	}
 	printf("Finished checking results\n");
 
 

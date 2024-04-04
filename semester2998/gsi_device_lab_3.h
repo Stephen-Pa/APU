@@ -44,6 +44,9 @@ struct gd_lab_3_idx_val {
 
 struct gd_load_SVM {
 	uint64_t supportVectors;		/* gdl_mem_handle_t(host) / gal_mem_handle_t(dev) */
+	uint64_t weights;
+	uint32_t gamma;
+	uint32_t intercept;
 	uint32_t num_features;
 	uint32_t num_support_vectors;
 } __attribute__((packed));
@@ -51,10 +54,7 @@ struct gd_load_SVM {
 struct gd_classify_testData {
 	uint64_t classification;	/* gdl_mem_handle_t(host) / gal_mem_handle_t(dev) */
 	uint64_t testData;	/* gdl_mem_handle_t(host) / gal_mem_handle_t(dev) */
-	uint64_t weights;
 	uint32_t num_testData;
-	uint32_t gamma;
-	uint32_t intercept;
 } __attribute__((packed));
 
 struct gd_lab_3_cmd {
