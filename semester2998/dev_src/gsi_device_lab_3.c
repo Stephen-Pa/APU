@@ -4,10 +4,10 @@
 #include <gsi/gal-fast-funcs.h>
 #include <gsi/libgvml_memory.h>
 
-#include <gsi/libgvml_iv.h>              /* gvml_create_index_16() */
-#include <gsi/libgvml_element_wise.h>    /* gvml_add_f16() */
-#include <gsi/libgvml_min_max.h>         /* gvml_mark_kmin_idxval_u16_mrk_g32k() */
-#include <gsi/libgvml_get_marked_data.h> /* gvml_get_marked_data_xv() */
+#include <gsi/libgvml_iv.h>
+#include <gsi/libgvml_element_wise.h>
+#include <gsi/libgvml_min_max.h>
+#include <gsi/libgvml_get_marked_data.h>
 #include <gsi/libgvml_debug.h>
 
 #include "gsi_device_lab_3.h"
@@ -41,13 +41,13 @@ static int load_SVM(struct gd_load_SVM *load_SVM_data)
 	//exempt for now
 	//gvml_lt_imm_u16(g_db_data.mrk_num_records, g_db_data.vr_idx, (uint16_t)g_db_data.num_records);
 
-	uint32_t zeroNumber = (g_SVM_data.num_support_vectors%4)?(((uint32_t)(g_SVM_data.num_support_vectors/4))+1):((g_SVM_data.num_support_vectors/4));
 	uint16_t *ptr_in = gal_mem_handle_to_apu_ptr(load_SVM_data->supportVectors);
 	const uint16_t *weights = gal_mem_handle_to_apu_ptr(load_SVM_data->weights);
 	enum gvml_vr16 vr_intercept = GVML_VR16_4;
 	enum gvml_vr16 vr_weights = GVML_VR16_5;
 	enum gvml_vr16 vr_gamma = GVML_VR16_6;
 	enum gvml_mrks_n_flgs marker = GVML_MRK1;
+	enum gvml_vr16 vr_idx;
 
 	g_SVM_data.vr_weights = vr_weights;
 	g_SVM_data.vr_gamma = vr_gamma;
@@ -63,14 +63,15 @@ static int load_SVM(struct gd_load_SVM *load_SVM_data)
 	//use this marker vr to make all entries except for zeroNumber spaces
 	//from the head of the vr 0 beacuse some of them are not going to be after
 	//during the SVM calculation
-	gvml_set_m(marker);
-	gvml_shift_tail_imm_m_m1_g2k(marker, marker, zeroNumber);
-	gvml_cpy_imm_16_msk_mrk(vr_weights, 0, 0xffff, marker);
-
+	gvml_create_index_16(vr_idx);
+	//alright here lt means indexes less than some number will be marked in the VR EXTREMELY HELPFUL!!
+	gvml_lt_imm_u16(marker, vr_idx, (uint16_t)load_SVM_data->num_support_vectors);
+	gvml_not_m(marker,marker);
+	gvml_cpy_imm_16_mrk(vr_weights, 0, marker);
 	//put the gamma and intercept
 	gvml_cpy_imm_16(vr_gamma, load_SVM_data->gamma);
 	gvml_cpy_imm_16(vr_intercept, load_SVM_data->intercept);
-
+	
 	//take each feature and store into VMR (L1) parts (only a max of 48 here)
 	for (uint32_t f = 0; f < load_SVM_data->num_features; ++f) {
 		direct_dma_l4_to_l1_32k(f, &ptr_in[f * GD_LAB_3_MAX_NUM_RECORDS_IN_DB]);
@@ -90,21 +91,25 @@ static int do_classification(struct gd_classify_testData *classify_data)
 	enum gvml_vr16 vr_temp = GVML_VR16_7;
 
 	const uint16_t *testInputs = gal_mem_handle_to_apu_ptr(classify_data->testData);
+	//gsi_info("gal_mem_handle size: %i, location pointer %x",sizeof(testInputs),testInputs);
 	uint16_t *outputValues = gal_mem_handle_to_apu_ptr(classify_data->classification);
 	uint32_t shiftNumber = 1;
 	uint32_t shiftNumberChange = 0;
-	uint16_t verdict = g_SVM_data.num_support_vectors;
+	uint32_t verdict = g_SVM_data.num_support_vectors;
 	uint16_t a = 0;
 	uint16_t b = 0;
 
+	//get this value for determining log add
 	while(verdict){
 		verdict>>=1;
 		shiftNumber*=2;
 	}
 	shiftNumber>>=3;
 	
+	//start code
 	for (uint32_t q = 0; q < classify_data->num_testData; ++q, testInputs += g_SVM_data.num_features) {
 		gvml_reset_16(vr_distances);
+		gvml_reset_16(vr_temp);
 		for (uint32_t f = 0; f < g_SVM_data.num_features; ++f) {
 			//copy one value into all spots
 			gvml_cpy_imm_16(vr_testData, testInputs[f]);
@@ -124,10 +129,12 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//multiply by weights
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
 
+		int count =0;
 		//now log sum the vr
 		shiftNumberChange = shiftNumber;
 		while(shiftNumberChange){
-			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, (shiftNumberChange));
+			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberChange);
+			count++;
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberChange>>=1;
 		}
@@ -140,12 +147,6 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		a = gvml_get_entry_16(vr_distances, 1);
 		gvml_set_entry_16(vr_temp, 0, a);
 		gvml_add_f16(vr_distances,vr_distances,vr_temp);
-		//THIS PART IS FUCKING THINGS UP, SO ITS GOT TO BE SOMETHING WITH GRP WHEN # SUPPORT VECTORS LARGE
-		//gvml_shift_head_imm_16_grp(vr_testData, vr_distances, 2, 2, vr_temp);
-		//gvml_add_f16(vr_testData, vr_distances, vr_testData);
-		//gvml_shift_head_imm_16_grp(vr_distances, vr_testData, 1, 1, vr_temp);
-		//gvml_add_f16(vr_distances, vr_distances, vr_testData);
-		//THIS PART IS FUCKING THINGS UP, SO ITS GOT TO BE SOMETHING WITH GRP WHEN # SUPPORT VECTORS LARGE
 		//add the intercept
 		gvml_add_f16(vr_distances, vr_distances, vr_intercept);
 		//last value in first position

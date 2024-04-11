@@ -1,0 +1,92 @@
+What Am I Testing:
+
+-speed
+	->overall execution time
+	->classification execution time
+	->loading parameters execution time
+	->allocating and copying memory (both loading parameters and classification)
+	->time copying data from text files (used to subtract from overall execution time)
+	
+-power
+	->just hit this a few times throughout device code
+
+
+
+
+Spam Tests:
+
+RUN DEFAULT!
+# support vectors: 1523, # testData: 4601
+
+CHANGE # SUPPORT VECTORS!
+# support vectors: 506, # testData: 4601
+# support vectors: 386, # testData: 4601
+# support vectors: 219, # testData: 4601
+
+CHANGE # Test Data!
+# support vectors: 1523, # testData: 3450
+# support vectors: 1523, # testData: 2300
+# support vectors: 1523, # testData: 1150
+
+
+Sports Tests:
+
+RUN DEFAULT!
+# support vectors: 995, # testData: 1000
+
+CHANGE # SUPPORT VECTORS!
+# support vectors: 744, # testData: 1000
+# support vectors: 496, # testData: 1000
+# support vectors: 248, # testData: 1000
+
+CHANGE # Test Data!
+# support vectors: 995, # testData: 750
+# support vectors: 995, # testData: 500
+# support vectors: 995, # testData: 250
+
+
+Breast Tests:
+
+RUN DEFAULT!
+# support vectors: 87, # testData: 699
+
+CHANGE # SUPPORT VECTORS!
+# support vectors: 22, # testData: 699
+# support vectors: 17, # testData: 699
+# support vectors: 11, # testData: 699
+
+CHANGE # Test Data!
+# support vectors: 87, # testData: 524
+# support vectors: 87, # testData: 349
+# support vectors: 87, # testData: 174
+
+
+Gamma Tests:
+
+RUN DEFAULT!
+# support vectors: 17489, # testData: 19020
+
+CHANGE # SUPPORT VECTORS!
+# support vectors: 12730, # testData: 19020
+# support vectors: 8463, # testData: 19020
+# support vectors: 4298, # testData: 19020
+
+CHANGE # Test Data!
+# support vectors: 17489, # testData: 14265
+# support vectors: 17489, # testData: 9510
+# support vectors: 17489, # testData: 4755
+
+MiniBoon Tests:
+
+RUN DEFAULT!
+# support vectors: 32655, # testData: 32768
+
+CHANGE # SUPPORT VECTORS!
+# support vectors: 24480, # testData: 32768
+# support vectors: 16334, # testData: 32768
+# support vectors: 8159, # testData: 32768
+
+CHANGE # Test Data!
+# support vectors: 32655, # testData: 24576
+# support vectors: 32655, # testData: 16384
+# support vectors: 32655, # testData: 8192
