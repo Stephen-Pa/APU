@@ -12,6 +12,7 @@ What Am I Testing:
 
 
 
+run each of these around 1000 times..?
 
 Spam Tests:
 
@@ -79,14 +80,14 @@ CHANGE # Test Data!
 MiniBoon Tests:
 
 RUN DEFAULT!
-# support vectors: 32655, # testData: 32768
+# support vectors: 32659, # testData: 32768
 
 CHANGE # SUPPORT VECTORS!
-# support vectors: 24480, # testData: 32768
-# support vectors: 16334, # testData: 32768
-# support vectors: 8159, # testData: 32768
+# support vectors: 24499, # testData: 32768
+# support vectors: 16324, # testData: 32768
+# support vectors: 8162, # testData: 32768
 
 CHANGE # Test Data!
-# support vectors: 32655, # testData: 24576
-# support vectors: 32655, # testData: 16384
-# support vectors: 32655, # testData: 8192
+# support vectors: 32659, # testData: 24576
+# support vectors: 32659, # testData: 16384
+# support vectors: 32659, # testData: 8192
