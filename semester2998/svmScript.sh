@@ -5,6 +5,7 @@ outFileTimingSports = "testTimingOutputSports.txt"
 outFileTimingBreast = "testTimingOutputBreast.txt"
 outFileTimingGamma = "testTimingOutputGamma.txt"
 outFileTimingMiniBoon = "testTimingOutputMiniBoon.txt"
+outFilePower = "testPowerOutput.txt"
 
 
 #ALL SPAM TESTS
@@ -255,5 +256,13 @@ do
         ./build/debug/gsi_device_lab_3 32659 48 8192 "./MiniBoon_SVM/Full"
 done
 
+#RUN PYTHON POWER
+
+python3 leda.py
+for i in {1..10}
+do
+        echo "$i">> $outFileTimingMiniBoon
+        ./build/debug/gsi_device_lab_3 32659 48 32768 "./MiniBoon_SVM/Full"
+done
 
 

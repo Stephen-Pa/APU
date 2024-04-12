@@ -1,0 +1,21 @@
+18.264830 Watts
+18.464992 Watts
+18.455710 Watts
+18.241865 Watts
+18.255644 Watts
+18.455710 Watts
+18.644032 Watts
+18.251051 Watts
+18.085880 Watts
+Constantly mapped memory = 3.0G
+Dynamically mapped memory = 11.0G
+Obtained Support Vectors and Weights
+Loading SVM ...
+Finished loading SVM
+Obtained Test Data and Other Data
+Finished classification
+Printing results ...
+Finished checking results
+
+Success
+17.146712 Watts
