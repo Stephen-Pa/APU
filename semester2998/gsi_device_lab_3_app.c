@@ -379,12 +379,6 @@ int main(int argc, char *argv[])
 	testData = malloc(sizeof(uint16_t) * args.num_testData * args.num_features);
 	classVector = malloc(sizeof(uint16_t) * args.num_testData*3);
 
-	if (NULL == supportVectors || NULL == testData || NULL == weights || classVector == NULL) {
-		gsi_error("malloc failed");
-		ret = gsi_status(ENOMEM);
-		goto CLEAN_UP;
-	}
-
 	const long long unsigned int const_mapped_size_req = 3L * 1024L * 1024L * 1024L;
 	long long unsigned int const_mapped_size_recv, dynamic_mapped_size_recv;
 
@@ -394,11 +388,17 @@ int main(int argc, char *argv[])
 		gsi_fatal("parse_args() failed");
 	}
 
+	if (NULL == supportVectors || NULL == testData || NULL == weights || classVector == NULL) {
+		gsi_error("malloc failed");
+		ret = gsi_status(ENOMEM);
+		goto CLEAN_UP;
+	}
+
 	gsi_libsys_init(
 		argv[0], /* program name */
 		true);   /* log_to_screen */
 
-	//gsi_sim_create_simulator(NUM_CTXS, g_ctxs);
+	gsi_sim_create_simulator(NUM_CTXS, g_ctxs);
 
 	uint32_t num_ctxs;
 	struct gdl_context_desc contexts_desc[GDL_MAX_NUM_CONTEXTS];
@@ -451,15 +451,15 @@ int main(int argc, char *argv[])
 	//get time for entire, data transfer with overhead, data transfer without overheaad, classification with overhead, classification without overhead
 
 	//Entire Execution
-	printf("%lf\n",((double)(stopClassification.tv_sec - startEntire.tv_sec)) + ((double)(stopClassification.tv_nsec - startEntire.tv_nsec)) / 1000000000L;);
+	printf("%lf\n",((double)(stopClassification.tv_sec - startEntire.tv_sec)) + ((double)(stopClassification.tv_nsec - startEntire.tv_nsec)) / 1000000000L);
 	//Data Transfer with Overhead
-	printf("%lf\n",((double)(stopDataTransfer.tv_sec - startDataTransfer.tv_sec)) + ((double)(stopDataTransfer.tv_nsec - startDataTransfer.tv_nsec)) / 1000000000L;);
+	printf("%lf\n",((double)(stopDataTransfer.tv_sec - startDataTransfer.tv_sec)) + ((double)(stopDataTransfer.tv_nsec - startDataTransfer.tv_nsec)) / 1000000000L);
 	//Data Transfer without Overhead
-	printf("%lf\n",((double)(APU_Timing.stopDataTransferDevice.tv_sec - APU_Timing.startDataTransferDevice.tv_sec)) + ((double)(APU_Timing.stopDataTransferDevice.tv_nsec - APU_Timing.startDataTransferDevice.tv_nsec)) / 1000000000L;);
+	printf("%lf\n",((double)(APU_Timing.stopDataTransferDevice.tv_sec - APU_Timing.startDataTransferDevice.tv_sec)) + ((double)(APU_Timing.stopDataTransferDevice.tv_nsec - APU_Timing.startDataTransferDevice.tv_nsec)) / 1000000000L);
 	//Classification with Overhead
-	printf("%lf\n",((double)(stopClassification.tv_sec - startClassification.tv_sec)) + ((double)(stopClassification.tv_nsec - startClassification.tv_nsec)) / 1000000000L;);
+	printf("%lf\n",((double)(stopClassification.tv_sec - startClassification.tv_sec)) + ((double)(stopClassification.tv_nsec - startClassification.tv_nsec)) / 1000000000L);
 	//Classification without Overhead
-	printf("%lf\n",((double)(APU_Timing.stopClassificationDevice.tv_sec - APU_Timing.startClassificationDevice.tv_sec)) + ((double)(APU_Timing.stopClassificationDevice.tv_nsec - APU_Timing.startClassificationDevice.tv_nsec)) / 1000000000L;);	startDataTransferDevice
+	printf("%lf\n",((double)(APU_Timing.stopClassificationDevice.tv_sec - APU_Timing.startClassificationDevice.tv_sec)) + ((double)(APU_Timing.stopClassificationDevice.tv_nsec - APU_Timing.startClassificationDevice.tv_nsec)) / 1000000000L);	startDataTransferDevice
 
 
 
