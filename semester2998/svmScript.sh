@@ -1,5 +1,7 @@
 #! /bin/bash
 
+make mode=debug product=gnu-ccac
+
 outFileTimingSpam = "testTimingOutputSpam.txt"
 outFileTimingSports = "testTimingOutputSports.txt"
 outFileTimingBreast = "testTimingOutputBreast.txt"
