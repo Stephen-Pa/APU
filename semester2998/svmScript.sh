@@ -257,12 +257,4 @@ do
 done
 
 #RUN PYTHON POWER
-
-python3 leda.py
-for i in {1..10}
-do
-        echo "$i">> $outFileTimingMiniBoon
-        ./build/debug/gsi_device_lab_3 32659 48 32768 "./MiniBoon_SVM/Full"
-done
-
-
+python3 leda.py & ./build/debug/gsi_device_lab_3 32659 48 100000 "./MiniBoon_SVM/Full" ; echo "done" >> "powerTest.txt"
