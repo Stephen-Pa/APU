@@ -368,6 +368,12 @@ static struct gsi_sim_contexts g_ctxs[NUM_CTXS] = {
 
 int main(int argc, char *argv[])
 {
+	struct lab_3_args args;
+	int ret = parse_args(&args, argc, argv);
+	if (ret) {
+		gsi_fatal("parse_args() failed");
+	}
+	
 	//allocate memory
 	struct timespec startEntire, startDataTransfer, stopDataTransfer, startDataTransferDevice, stopDataTransferDevice;
 	struct timespec startClassification, stopClassification, startClassificationDevice, stopClassificationDevice;
@@ -381,12 +387,6 @@ int main(int argc, char *argv[])
 
 	const long long unsigned int const_mapped_size_req = 3L * 1024L * 1024L * 1024L;
 	long long unsigned int const_mapped_size_recv, dynamic_mapped_size_recv;
-
-	struct lab_3_args args;
-	int ret = parse_args(&args, argc, argv);
-	if (ret) {
-		gsi_fatal("parse_args() failed");
-	}
 
 	if (NULL == supportVectors || NULL == testData || NULL == weights || classVector == NULL) {
 		gsi_error("malloc failed");
@@ -459,7 +459,7 @@ int main(int argc, char *argv[])
 	//Classification with Overhead
 	printf("%lf\n",((double)(stopClassification.tv_sec - startClassification.tv_sec)) + ((double)(stopClassification.tv_nsec - startClassification.tv_nsec)) / 1000000000L);
 	//Classification without Overhead
-	printf("%lf\n",((double)(APU_Timing.stopClassificationDevice.tv_sec - APU_Timing.startClassificationDevice.tv_sec)) + ((double)(APU_Timing.stopClassificationDevice.tv_nsec - APU_Timing.startClassificationDevice.tv_nsec)) / 1000000000L);	startDataTransferDevice
+	printf("%lf\n",((double)(APU_Timing.stopClassificationDevice.tv_sec - APU_Timing.startClassificationDevice.tv_sec)) + ((double)(APU_Timing.stopClassificationDevice.tv_nsec - APU_Timing.startClassificationDevice.tv_nsec)) / 1000000000L);
 
 
 
