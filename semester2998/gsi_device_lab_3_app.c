@@ -477,8 +477,6 @@ CLEAN_UP:
 	gsi_libsys_exit();
 	if (ret != 0) {
 		printf("\nFailure\n");
-	} else {
-		printf("\nSuccess\n");
 	}
 	return ret;
 }

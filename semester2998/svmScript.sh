@@ -2,12 +2,12 @@
 
 make mode=debug product=gnu-ccac
 
-outFileTimingSpam = "testTimingOutputSpam.txt"
-outFileTimingSports = "testTimingOutputSports.txt"
-outFileTimingBreast = "testTimingOutputBreast.txt"
-outFileTimingGamma = "testTimingOutputGamma.txt"
-outFileTimingMiniBoon = "testTimingOutputMiniBoon.txt"
-outFilePower = "testPowerOutput.txt"
+outFileTimingSpam="testTimingOutputSpam.txt"
+outFileTimingSports="testTimingOutputSports.txt"
+outFileTimingBreast="testTimingOutputBreast.txt"
+outFileTimingGamma="testTimingOutputGamma.txt"
+outFileTimingMiniBoon="testTimingOutputMiniBoon.txt"
+outFilePower="testPowerOutput.txt"
 
 
 #ALL SPAM TESTS
