@@ -1,0 +1,1458 @@
+Info: sources and includes are:
+Info: dev_inc_dirs="dev_src/include"
+Info: dev_extra_inc_dirs=""
+Info: dev_h_files=" dev_src/include/gsi_device_lab_3_dma.h"
+Info: dev_src_files="dev_src/gsi_device_lab_3.c dev_src/gsi_device_lab_3_dma.c"
+Info: apl_src_files=""
+Info: host_inc_dirs=""
+Info: host_extra_inc_dirs=""
+Info: host_h_files=""
+Info: host_src_files="gsi_device_lab_3_app.c"
+Info: common_host_dev_h_file="gsi_device_lab_3.h"
+Info: build with product="gnu-ccac" hardware_type="leda_g" mode="debug" BUILD_DIR=build/debug
+Info: pre-process before link of .mod file
+Info: copy and strip GVML library
+/home/spalli/APU/semester2998/../Common/fix-gvml-lib-for-the-gnu-toolchain-for-arc.sh  --product gnu-ccac --target-dir build/debug #  If gnu-ccac product, then copy and strip GVML library
+Info: PWD=/home/spalli/APU/semester2998
+Info: /home/spalli/APU/semester2998/../Common/fix-gvml-lib-for-the-gnu-toolchain-for-arc.sh --product gnu-ccac --target-dir build/debug
+Info: fix relocation information within GVML library that was compiled with the ccac compiler for use by the GNU toolchain for ARC - otherwise, the GNU linker will crash
+Info: nothing to do for GVML library libgsigvml.a - the fixed library is already available at build/debug/libgsigvml.a
+Info: auto generate linker command files for APU cores 1,2,3 from the linker command file of core 0
+/home/spalli/APU/semester2998/../Common/generate-gnu-linker-command-file-for-cores-1-2-3.sh --product gnu-ccac --target-dir build/debug "/home/spalli/APU/semester2998/../Common/memory.x.template"
+Info: PWD=/home/spalli/APU/semester2998
+Info: /home/spalli/APU/semester2998/../Common/generate-gnu-linker-command-file-for-cores-1-2-3.sh --product gnu-ccac --target-dir build/debug /home/spalli/APU/semester2998/../Common/memory.x.template
+Info: generate the linker command file for the 4 cores of the APU
+Info: generate linker command file for core 0 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_0
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_0
+Info: generate linker command file for core 1 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_1
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_1
+Info: generate linker command file for core 2 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_2
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_2
+Info: generate linker command file for core 3 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_3
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_3
+Info: link for APU core 0 build/debug/gsi_device_lab_3.mod_0 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_0 -g -o build/debug/gsi_device_lab_3.mod_0
+Info: link for APU core 1 build/debug/gsi_device_lab_3.mod_1 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_1 -g -o build/debug/gsi_device_lab_3.mod_1
+Info: link for APU core 2 build/debug/gsi_device_lab_3.mod_2 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_2 -g -o build/debug/gsi_device_lab_3.mod_2
+Info: link for APU core 3 build/debug/gsi_device_lab_3.mod_3 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_3 -g -o build/debug/gsi_device_lab_3.mod_3
+Info: modtool generate C defs build/debug/gsi_device_lab_3-defs.h
+/opt/gsi/gnu-ccac/ubuntu/bin/modtool -c build/debug/gsi_device_lab_3-defs.c -i build/debug/gsi_device_lab_3-defs.h -b build/debug/gsi_device_lab_3.mod --different-arc-exe-for-each-apu-core 1
+Info: compile host gsi_device_lab_3_app.c into object build/debug/gsi_device_lab_3_app_host.o
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -I /opt/gsi/gnu-ccac/ubuntu/include \
+        -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/x86_64 \
+        -I build/debug \
+        -I /usr/local/include/gsi/ref/gsi \
+        -I /home/spalli/APU/semester2998/../Common \
+         \
+         \
+        -g -c \
+        gsi_device_lab_3_app.c \
+        \
+        -o build/debug/gsi_device_lab_3_app_host.o
+gsi_device_lab_3_app.c: In function ‘load_SVM’:
+gsi_device_lab_3_app.c:77:30: warning: taking address of packed member of ‘struct gd_load_SVM’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+   77 |  ret = gdl_add_to_mem_handle(&cmd.load_SVM_data.weights, cmd.load_SVM_data.supportVectors, pre_processed_SVM_size);
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c: In function ‘do_classification’:
+gsi_device_lab_3_app.c:175:30: warning: taking address of packed member of ‘struct gd_classify_testData’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  175 |  ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.testData, testData_size);
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:135:11: warning: unused parameter ‘num_supportVectors’ [-Wunused-parameter]
+  135 |  uint32_t num_supportVectors)
+      |  ~~~~~~~~~^~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c: In function ‘main’:
+gsi_device_lab_3_app.c:380:9: warning: unused variable ‘totalTime’ [-Wunused-variable]
+  380 |  double totalTime = 0;
+      |         ^~~~~~~~~
+gsi_device_lab_3_app.c:379:86: warning: unused variable ‘stopClassificationDevice’ [-Wunused-variable]
+  379 |  struct timespec startClassification, stopClassification, startClassificationDevice, stopClassificationDevice;
+      |                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:379:59: warning: unused variable ‘startClassificationDevice’ [-Wunused-variable]
+  379 |  struct timespec startClassification, stopClassification, startClassificationDevice, stopClassificationDevice;
+      |                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:378:93: warning: unused variable ‘stopDataTransferDevice’ [-Wunused-variable]
+  378 |  struct timespec startEntire, startDataTransfer, stopDataTransfer, startDataTransferDevice, stopDataTransferDevice;
+      |                                                                                             ^~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:378:68: warning: unused variable ‘startDataTransferDevice’ [-Wunused-variable]
+  378 |  struct timespec startEntire, startDataTransfer, stopDataTransfer, startDataTransferDevice, stopDataTransferDevice;
+      |                                                                    ^~~~~~~~~~~~~~~~~~~~~~~
+At top level:
+gsi_device_lab_3_app.c:266:14: warning: ‘convertFloat16Back’ defined but not used [-Wunused-function]
+  266 | static float convertFloat16Back(int a){
+      |              ^~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:239:14: warning: ‘convertGSIFloatBack’ defined but not used [-Wunused-function]
+  239 | static float convertGSIFloatBack(int a){
+      |              ^~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:226:12: warning: ‘convertGSIFloat’ defined but not used [-Wunused-function]
+  226 | static int convertGSIFloat(float a){
+      |            ^~~~~~~~~~~~~~~
+Info: compile host generated file build/debug/gsi_device_lab_3-defs.c into object build/debug/gsi_device_lab_3-defs.o
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -I /opt/gsi/gnu-ccac/ubuntu/include \
+        -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/x86_64 \
+        -I build/debug \
+        -I /usr/local/include/gsi/ref/gsi \
+        -I /home/spalli/APU/semester2998/../Common \
+        -g -c \
+        build/debug/gsi_device_lab_3-defs.c \
+        \
+        -o build/debug/gsi_device_lab_3-defs.o
+Info: elf2bin build for core 0 build/debug/gsi_device_lab_3.bin_0
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_0 build/debug/gsi_device_lab_3.bin_0
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 0 build/debug/gsi_device_lab_3_apuc_code_0.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_0_start=gsi_module_0_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_0_end=gsi_module_0_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_0_size=gsi_module_0_dump_size  \
+    build/debug/gsi_device_lab_3.bin_0 build/debug/gsi_device_lab_3_apuc_code_0.o
+Info: elf2bin build for core 1 build/debug/gsi_device_lab_3.bin_1
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_1 build/debug/gsi_device_lab_3.bin_1
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 1 build/debug/gsi_device_lab_3_apuc_code_1.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_1_start=gsi_module_1_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_1_end=gsi_module_1_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_1_size=gsi_module_1_dump_size  \
+    build/debug/gsi_device_lab_3.bin_1 build/debug/gsi_device_lab_3_apuc_code_1.o
+Info: elf2bin build for core 2 build/debug/gsi_device_lab_3.bin_2
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_2 build/debug/gsi_device_lab_3.bin_2
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 2 build/debug/gsi_device_lab_3_apuc_code_2.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_2_start=gsi_module_2_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_2_end=gsi_module_2_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_2_size=gsi_module_2_dump_size  \
+    build/debug/gsi_device_lab_3.bin_2 build/debug/gsi_device_lab_3_apuc_code_2.o
+Info: elf2bin build for core 3 build/debug/gsi_device_lab_3.bin_3
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_3 build/debug/gsi_device_lab_3.bin_3
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 3 build/debug/gsi_device_lab_3_apuc_code_3.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_3_start=gsi_module_3_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_3_end=gsi_module_3_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_3_size=gsi_module_3_dump_size  \
+    build/debug/gsi_device_lab_3.bin_3 build/debug/gsi_device_lab_3_apuc_code_3.o
+Info: create host static library build/debug/gsi_device_lab_3_host.a from build/debug/gsi_device_lab_3_app_host.o build/debug/gsi_device_lab_3-defs.o build/debug/gsi_device_lab_3_apuc_code_0.o build/debug/gsi_device_lab_3_apuc_code_1.o build/debug/gsi_device_lab_3_apuc_code_2.o build/debug/gsi_device_lab_3_apuc_code_3.o
+ar -rs build/debug/gsi_device_lab_3_host.a build/debug/gsi_device_lab_3_app_host.o build/debug/gsi_device_lab_3-defs.o build/debug/gsi_device_lab_3_apuc_code_0.o build/debug/gsi_device_lab_3_apuc_code_1.o build/debug/gsi_device_lab_3_apuc_code_2.o build/debug/gsi_device_lab_3_apuc_code_3.o
+info: create a dynamic version of the host library build/debug/gsi_device_lab_3_host.a
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -shared -Wl,--whole-archive build/debug/gsi_device_lab_3_host.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_x86_64.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsidevice.a -Wl,--no-whole-archive -o build/debug/gsi_device_lab_3_host.so
+Info: link application gsi_device_lab_3 into exe build/debug/gsi_device_lab_3
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -g \
+       \
+   -Wl,--whole-archive build/debug/gsi_device_lab_3_host.a -Wl,--no-whole-archive \
+        \
+        -Wl,--as-needed -Wl,--no-undefined -Wl,--start-group /usr/local/lib/x86_64-linux-gnu/gsi/libgsigvml_ref.a -ldl -lm /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsidevice.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_x86_64.a -lpthread -Wl,--end-group \
+        \
+        -o build/debug/gsi_device_lab_3
+Info: exe for application gsi_device_lab_3 is available at build/debug/gsi_device_lab_3
+Info: sources and includes are:
+Info: dev_inc_dirs="dev_src/include"
+Info: dev_extra_inc_dirs=""
+Info: dev_h_files=" dev_src/include/gsi_device_lab_3_dma.h"
+Info: dev_src_files="dev_src/gsi_device_lab_3.c dev_src/gsi_device_lab_3_dma.c"
+Info: apl_src_files=""
+Info: host_inc_dirs=""
+Info: host_extra_inc_dirs=""
+Info: host_h_files=""
+Info: host_src_files="gsi_device_lab_3_app.c"
+Info: common_host_dev_h_file="gsi_device_lab_3.h"
+Info: build with product="gnu-ccac" hardware_type="leda_g" mode="debug" BUILD_DIR=build/debug
+Info: pre-process before link of .mod file
+Info: copy and strip GVML library
+/home/spalli/APU/semester2998/../Common/fix-gvml-lib-for-the-gnu-toolchain-for-arc.sh  --product gnu-ccac --target-dir build/debug #  If gnu-ccac product, then copy and strip GVML library
+Info: PWD=/home/spalli/APU/semester2998
+Info: /home/spalli/APU/semester2998/../Common/fix-gvml-lib-for-the-gnu-toolchain-for-arc.sh --product gnu-ccac --target-dir build/debug
+Info: fix relocation information within GVML library that was compiled with the ccac compiler for use by the GNU toolchain for ARC - otherwise, the GNU linker will crash
+Info: nothing to do for GVML library libgsigvml.a - the fixed library is already available at build/debug/libgsigvml.a
+Info: auto generate linker command files for APU cores 1,2,3 from the linker command file of core 0
+/home/spalli/APU/semester2998/../Common/generate-gnu-linker-command-file-for-cores-1-2-3.sh --product gnu-ccac --target-dir build/debug "/home/spalli/APU/semester2998/../Common/memory.x.template"
+Info: PWD=/home/spalli/APU/semester2998
+Info: /home/spalli/APU/semester2998/../Common/generate-gnu-linker-command-file-for-cores-1-2-3.sh --product gnu-ccac --target-dir build/debug /home/spalli/APU/semester2998/../Common/memory.x.template
+Info: generate the linker command file for the 4 cores of the APU
+Info: generate linker command file for core 0 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_0
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_0
+Info: generate linker command file for core 1 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_1
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_1
+Info: generate linker command file for core 2 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_2
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_2
+Info: generate linker command file for core 3 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_3
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_3
+Info: link for APU core 0 build/debug/gsi_device_lab_3.mod_0 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_0 -g -o build/debug/gsi_device_lab_3.mod_0
+Info: link for APU core 1 build/debug/gsi_device_lab_3.mod_1 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_1 -g -o build/debug/gsi_device_lab_3.mod_1
+Info: link for APU core 2 build/debug/gsi_device_lab_3.mod_2 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_2 -g -o build/debug/gsi_device_lab_3.mod_2
+Info: link for APU core 3 build/debug/gsi_device_lab_3.mod_3 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_3 -g -o build/debug/gsi_device_lab_3.mod_3
+Info: modtool generate C defs build/debug/gsi_device_lab_3-defs.h
+/opt/gsi/gnu-ccac/ubuntu/bin/modtool -c build/debug/gsi_device_lab_3-defs.c -i build/debug/gsi_device_lab_3-defs.h -b build/debug/gsi_device_lab_3.mod --different-arc-exe-for-each-apu-core 1
+Info: compile host gsi_device_lab_3_app.c into object build/debug/gsi_device_lab_3_app_host.o
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -I /opt/gsi/gnu-ccac/ubuntu/include \
+        -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/x86_64 \
+        -I build/debug \
+        -I /usr/local/include/gsi/ref/gsi \
+        -I /home/spalli/APU/semester2998/../Common \
+         \
+         \
+        -g -c \
+        gsi_device_lab_3_app.c \
+        \
+        -o build/debug/gsi_device_lab_3_app_host.o
+gsi_device_lab_3_app.c: In function ‘load_SVM’:
+gsi_device_lab_3_app.c:77:30: warning: taking address of packed member of ‘struct gd_load_SVM’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+   77 |  ret = gdl_add_to_mem_handle(&cmd.load_SVM_data.weights, cmd.load_SVM_data.supportVectors, pre_processed_SVM_size);
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c: In function ‘do_classification’:
+gsi_device_lab_3_app.c:175:30: warning: taking address of packed member of ‘struct gd_classify_testData’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  175 |  ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.testData, testData_size);
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:135:11: warning: unused parameter ‘num_supportVectors’ [-Wunused-parameter]
+  135 |  uint32_t num_supportVectors)
+      |  ~~~~~~~~~^~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c: In function ‘main’:
+gsi_device_lab_3_app.c:380:9: warning: unused variable ‘totalTime’ [-Wunused-variable]
+  380 |  double totalTime = 0;
+      |         ^~~~~~~~~
+gsi_device_lab_3_app.c:379:86: warning: unused variable ‘stopClassificationDevice’ [-Wunused-variable]
+  379 |  struct timespec startClassification, stopClassification, startClassificationDevice, stopClassificationDevice;
+      |                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:379:59: warning: unused variable ‘startClassificationDevice’ [-Wunused-variable]
+  379 |  struct timespec startClassification, stopClassification, startClassificationDevice, stopClassificationDevice;
+      |                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:378:93: warning: unused variable ‘stopDataTransferDevice’ [-Wunused-variable]
+  378 |  struct timespec startEntire, startDataTransfer, stopDataTransfer, startDataTransferDevice, stopDataTransferDevice;
+      |                                                                                             ^~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:378:68: warning: unused variable ‘startDataTransferDevice’ [-Wunused-variable]
+  378 |  struct timespec startEntire, startDataTransfer, stopDataTransfer, startDataTransferDevice, stopDataTransferDevice;
+      |                                                                    ^~~~~~~~~~~~~~~~~~~~~~~
+At top level:
+gsi_device_lab_3_app.c:266:14: warning: ‘convertFloat16Back’ defined but not used [-Wunused-function]
+  266 | static float convertFloat16Back(int a){
+      |              ^~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:239:14: warning: ‘convertGSIFloatBack’ defined but not used [-Wunused-function]
+  239 | static float convertGSIFloatBack(int a){
+      |              ^~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:226:12: warning: ‘convertGSIFloat’ defined but not used [-Wunused-function]
+  226 | static int convertGSIFloat(float a){
+      |            ^~~~~~~~~~~~~~~
+Info: compile host generated file build/debug/gsi_device_lab_3-defs.c into object build/debug/gsi_device_lab_3-defs.o
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -I /opt/gsi/gnu-ccac/ubuntu/include \
+        -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/x86_64 \
+        -I build/debug \
+        -I /usr/local/include/gsi/ref/gsi \
+        -I /home/spalli/APU/semester2998/../Common \
+        -g -c \
+        build/debug/gsi_device_lab_3-defs.c \
+        \
+        -o build/debug/gsi_device_lab_3-defs.o
+Info: elf2bin build for core 0 build/debug/gsi_device_lab_3.bin_0
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_0 build/debug/gsi_device_lab_3.bin_0
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 0 build/debug/gsi_device_lab_3_apuc_code_0.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_0_start=gsi_module_0_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_0_end=gsi_module_0_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_0_size=gsi_module_0_dump_size  \
+    build/debug/gsi_device_lab_3.bin_0 build/debug/gsi_device_lab_3_apuc_code_0.o
+Info: elf2bin build for core 1 build/debug/gsi_device_lab_3.bin_1
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_1 build/debug/gsi_device_lab_3.bin_1
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 1 build/debug/gsi_device_lab_3_apuc_code_1.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_1_start=gsi_module_1_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_1_end=gsi_module_1_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_1_size=gsi_module_1_dump_size  \
+    build/debug/gsi_device_lab_3.bin_1 build/debug/gsi_device_lab_3_apuc_code_1.o
+Info: elf2bin build for core 2 build/debug/gsi_device_lab_3.bin_2
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_2 build/debug/gsi_device_lab_3.bin_2
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 2 build/debug/gsi_device_lab_3_apuc_code_2.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_2_start=gsi_module_2_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_2_end=gsi_module_2_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_2_size=gsi_module_2_dump_size  \
+    build/debug/gsi_device_lab_3.bin_2 build/debug/gsi_device_lab_3_apuc_code_2.o
+Info: elf2bin build for core 3 build/debug/gsi_device_lab_3.bin_3
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_3 build/debug/gsi_device_lab_3.bin_3
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 3 build/debug/gsi_device_lab_3_apuc_code_3.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_3_start=gsi_module_3_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_3_end=gsi_module_3_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_3_size=gsi_module_3_dump_size  \
+    build/debug/gsi_device_lab_3.bin_3 build/debug/gsi_device_lab_3_apuc_code_3.o
+Info: create host static library build/debug/gsi_device_lab_3_host.a from build/debug/gsi_device_lab_3_app_host.o build/debug/gsi_device_lab_3-defs.o build/debug/gsi_device_lab_3_apuc_code_0.o build/debug/gsi_device_lab_3_apuc_code_1.o build/debug/gsi_device_lab_3_apuc_code_2.o build/debug/gsi_device_lab_3_apuc_code_3.o
+ar -rs build/debug/gsi_device_lab_3_host.a build/debug/gsi_device_lab_3_app_host.o build/debug/gsi_device_lab_3-defs.o build/debug/gsi_device_lab_3_apuc_code_0.o build/debug/gsi_device_lab_3_apuc_code_1.o build/debug/gsi_device_lab_3_apuc_code_2.o build/debug/gsi_device_lab_3_apuc_code_3.o
+info: create a dynamic version of the host library build/debug/gsi_device_lab_3_host.a
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -shared -Wl,--whole-archive build/debug/gsi_device_lab_3_host.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_x86_64.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsidevice.a -Wl,--no-whole-archive -o build/debug/gsi_device_lab_3_host.so
+Info: link application gsi_device_lab_3 into exe build/debug/gsi_device_lab_3
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -g \
+       \
+   -Wl,--whole-archive build/debug/gsi_device_lab_3_host.a -Wl,--no-whole-archive \
+        \
+        -Wl,--as-needed -Wl,--no-undefined -Wl,--start-group /usr/local/lib/x86_64-linux-gnu/gsi/libgsigvml_ref.a -ldl -lm /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsidevice.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_x86_64.a -lpthread -Wl,--end-group \
+        \
+        -o build/debug/gsi_device_lab_3
+Info: exe for application gsi_device_lab_3 is available at build/debug/gsi_device_lab_3
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+Error reading support vectors file, at line 12370, element: 0
+./svmScriptCurrent.sh: line 150: 301432 Killed                  ./build/debug/gsi_device_lab_3 4298 10 19020 "./Gamma_SVM/Quarter" >> $outFileTimingGamma
+GSI-LOG: WARNING: libgdl.c:429:                       run_init_task: init task gdl_schedule_batch failed with timeout, reseting APU
+GSI-LOG: reset and free context process 0. Please wait ...
+GSI-LOG: WARNING: libgdl.c:432:                       run_init_task: run_init_task() - ret = EAGAIN. gdl_context_free_and_reset()
+GSI-LOG:   FATAL: gsi_device_lab_3_app.c:427:                  main: gdl_context_alloc failed: Resource temporarily unavailable
+Info: sources and includes are:
+Info: dev_inc_dirs="dev_src/include"
+Info: dev_extra_inc_dirs=""
+Info: dev_h_files=" dev_src/include/gsi_device_lab_3_dma.h"
+Info: dev_src_files="dev_src/gsi_device_lab_3.c dev_src/gsi_device_lab_3_dma.c"
+Info: apl_src_files=""
+Info: host_inc_dirs=""
+Info: host_extra_inc_dirs=""
+Info: host_h_files=""
+Info: host_src_files="gsi_device_lab_3_app.c"
+Info: common_host_dev_h_file="gsi_device_lab_3.h"
+Info: build with product="gnu-ccac" hardware_type="leda_g" mode="debug" BUILD_DIR=build/debug
+Info: pre-process before link of .mod file
+Info: copy and strip GVML library
+/home/spalli/APU/semester2998/../Common/fix-gvml-lib-for-the-gnu-toolchain-for-arc.sh  --product gnu-ccac --target-dir build/debug #  If gnu-ccac product, then copy and strip GVML library
+Info: PWD=/home/spalli/APU/semester2998
+Info: /home/spalli/APU/semester2998/../Common/fix-gvml-lib-for-the-gnu-toolchain-for-arc.sh --product gnu-ccac --target-dir build/debug
+Info: fix relocation information within GVML library that was compiled with the ccac compiler for use by the GNU toolchain for ARC - otherwise, the GNU linker will crash
+Info: nothing to do for GVML library libgsigvml.a - the fixed library is already available at build/debug/libgsigvml.a
+Info: auto generate linker command files for APU cores 1,2,3 from the linker command file of core 0
+/home/spalli/APU/semester2998/../Common/generate-gnu-linker-command-file-for-cores-1-2-3.sh --product gnu-ccac --target-dir build/debug "/home/spalli/APU/semester2998/../Common/memory.x.template"
+Info: PWD=/home/spalli/APU/semester2998
+Info: /home/spalli/APU/semester2998/../Common/generate-gnu-linker-command-file-for-cores-1-2-3.sh --product gnu-ccac --target-dir build/debug /home/spalli/APU/semester2998/../Common/memory.x.template
+Info: generate the linker command file for the 4 cores of the APU
+Info: generate linker command file for core 0 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_0
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_0
+Info: generate linker command file for core 1 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_1
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_1
+Info: generate linker command file for core 2 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_2
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_2
+Info: generate linker command file for core 3 from /home/spalli/APU/semester2998/../Common/memory.x.template --> build/debug/memory.x_3
+Info: nothing to do - genarated linker command file already exist at - build/debug/memory.x_3
+Info: link for APU core 0 build/debug/gsi_device_lab_3.mod_0 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_0 -g -o build/debug/gsi_device_lab_3.mod_0
+Info: link for APU core 1 build/debug/gsi_device_lab_3.mod_1 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_1 -g -o build/debug/gsi_device_lab_3.mod_1
+Info: link for APU core 2 build/debug/gsi_device_lab_3.mod_2 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_2 -g -o build/debug/gsi_device_lab_3.mod_2
+Info: link for APU core 3 build/debug/gsi_device_lab_3.mod_3 at work directory /home/spalli/APU/semester2998
+arc-elf32-tcf-gcc       -O0 -DDEBUG_BUILD --specs=nosys.specs -munaligned-access -mno-sdata -Wl,-z,max-page-size=4096 -fpic   -L/home/spalli/APU/semester2998/../Common/ -Wa,-c -fno-short-enums -fbuiltin -std=gnu11 -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_LIBSYS_ARCHS36 -D_PRODUCT_arc -DBOARD_TYPE_pci -D_TARGET_CONTEXT_APUC -D_REENTRANT -DGSI_LIBSYS_ARCHS36 -DGSI_APUC -DAPUC_TYPE_hw -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/archs36 -Wall -Wextra --tcf /home/spalli/APU/semester2998/../Common/arc_for_gcc_for_gnu-ccac.tcf  -Wl,--whole-archive build/debug/gsi_device_lab_3.a -Wl,--no-whole-archive -Wl,--whole-archive /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_gnu_toolchain_arc.a -Wl,--no-whole-archive  build/debug/libgsigvml.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsiapu_arc.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_archs36.a  /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libct.o /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libmw.o  -Wl,-T,build/debug/memory.x_3 -g -o build/debug/gsi_device_lab_3.mod_3
+Info: modtool generate C defs build/debug/gsi_device_lab_3-defs.h
+/opt/gsi/gnu-ccac/ubuntu/bin/modtool -c build/debug/gsi_device_lab_3-defs.c -i build/debug/gsi_device_lab_3-defs.h -b build/debug/gsi_device_lab_3.mod --different-arc-exe-for-each-apu-core 1
+Info: compile host gsi_device_lab_3_app.c into object build/debug/gsi_device_lab_3_app_host.o
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -I /opt/gsi/gnu-ccac/ubuntu/include \
+        -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/x86_64 \
+        -I build/debug \
+        -I /usr/local/include/gsi/ref/gsi \
+        -I /home/spalli/APU/semester2998/../Common \
+         \
+         \
+        -g -c \
+        gsi_device_lab_3_app.c \
+        \
+        -o build/debug/gsi_device_lab_3_app_host.o
+gsi_device_lab_3_app.c: In function ‘load_SVM’:
+gsi_device_lab_3_app.c:77:30: warning: taking address of packed member of ‘struct gd_load_SVM’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+   77 |  ret = gdl_add_to_mem_handle(&cmd.load_SVM_data.weights, cmd.load_SVM_data.supportVectors, pre_processed_SVM_size);
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c: In function ‘do_classification’:
+gsi_device_lab_3_app.c:175:30: warning: taking address of packed member of ‘struct gd_classify_testData’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  175 |  ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.testData, testData_size);
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:135:11: warning: unused parameter ‘num_supportVectors’ [-Wunused-parameter]
+  135 |  uint32_t num_supportVectors)
+      |  ~~~~~~~~~^~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c: In function ‘main’:
+gsi_device_lab_3_app.c:380:9: warning: unused variable ‘totalTime’ [-Wunused-variable]
+  380 |  double totalTime = 0;
+      |         ^~~~~~~~~
+gsi_device_lab_3_app.c:379:86: warning: unused variable ‘stopClassificationDevice’ [-Wunused-variable]
+  379 |  struct timespec startClassification, stopClassification, startClassificationDevice, stopClassificationDevice;
+      |                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:379:59: warning: unused variable ‘startClassificationDevice’ [-Wunused-variable]
+  379 |  struct timespec startClassification, stopClassification, startClassificationDevice, stopClassificationDevice;
+      |                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:378:93: warning: unused variable ‘stopDataTransferDevice’ [-Wunused-variable]
+  378 |  struct timespec startEntire, startDataTransfer, stopDataTransfer, startDataTransferDevice, stopDataTransferDevice;
+      |                                                                                             ^~~~~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:378:68: warning: unused variable ‘startDataTransferDevice’ [-Wunused-variable]
+  378 |  struct timespec startEntire, startDataTransfer, stopDataTransfer, startDataTransferDevice, stopDataTransferDevice;
+      |                                                                    ^~~~~~~~~~~~~~~~~~~~~~~
+At top level:
+gsi_device_lab_3_app.c:266:14: warning: ‘convertFloat16Back’ defined but not used [-Wunused-function]
+  266 | static float convertFloat16Back(int a){
+      |              ^~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:239:14: warning: ‘convertGSIFloatBack’ defined but not used [-Wunused-function]
+  239 | static float convertGSIFloatBack(int a){
+      |              ^~~~~~~~~~~~~~~~~~~
+gsi_device_lab_3_app.c:226:12: warning: ‘convertGSIFloat’ defined but not used [-Wunused-function]
+  226 | static int convertGSIFloat(float a){
+      |            ^~~~~~~~~~~~~~~
+Info: compile host generated file build/debug/gsi_device_lab_3-defs.c into object build/debug/gsi_device_lab_3-defs.o
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -I /opt/gsi/gnu-ccac/ubuntu/include \
+        -I /opt/gsi/gnu-ccac/ubuntu/include/gsi/x86_64 \
+        -I build/debug \
+        -I /usr/local/include/gsi/ref/gsi \
+        -I /home/spalli/APU/semester2998/../Common \
+        -g -c \
+        build/debug/gsi_device_lab_3-defs.c \
+        \
+        -o build/debug/gsi_device_lab_3-defs.o
+Info: elf2bin build for core 0 build/debug/gsi_device_lab_3.bin_0
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_0 build/debug/gsi_device_lab_3.bin_0
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 0 build/debug/gsi_device_lab_3_apuc_code_0.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_0_start=gsi_module_0_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_0_end=gsi_module_0_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_0_size=gsi_module_0_dump_size  \
+    build/debug/gsi_device_lab_3.bin_0 build/debug/gsi_device_lab_3_apuc_code_0.o
+Info: elf2bin build for core 1 build/debug/gsi_device_lab_3.bin_1
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_1 build/debug/gsi_device_lab_3.bin_1
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 1 build/debug/gsi_device_lab_3_apuc_code_1.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_1_start=gsi_module_1_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_1_end=gsi_module_1_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_1_size=gsi_module_1_dump_size  \
+    build/debug/gsi_device_lab_3.bin_1 build/debug/gsi_device_lab_3_apuc_code_1.o
+Info: elf2bin build for core 2 build/debug/gsi_device_lab_3.bin_2
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_2 build/debug/gsi_device_lab_3.bin_2
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 2 build/debug/gsi_device_lab_3_apuc_code_2.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_2_start=gsi_module_2_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_2_end=gsi_module_2_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_2_size=gsi_module_2_dump_size  \
+    build/debug/gsi_device_lab_3.bin_2 build/debug/gsi_device_lab_3_apuc_code_2.o
+Info: elf2bin build for core 3 build/debug/gsi_device_lab_3.bin_3
+arc-elf32-objcopy -O binary build/debug/gsi_device_lab_3.mod_3 build/debug/gsi_device_lab_3.bin_3
+Info: objcopy -I binary -O elf64-x86-64 -B i386 build for core 3 build/debug/gsi_device_lab_3_apuc_code_3.o
+objcopy -I binary -O elf64-x86-64        -B i386 \
+    --redefine-sym _binary_build_debug_gsi_device_lab_3_bin_3_start=gsi_module_3_dump_start \
+    --redefine-sym   _binary_build_debug_gsi_device_lab_3_bin_3_end=gsi_module_3_dump_end   \
+    --redefine-sym  _binary_build_debug_gsi_device_lab_3_bin_3_size=gsi_module_3_dump_size  \
+    build/debug/gsi_device_lab_3.bin_3 build/debug/gsi_device_lab_3_apuc_code_3.o
+Info: create host static library build/debug/gsi_device_lab_3_host.a from build/debug/gsi_device_lab_3_app_host.o build/debug/gsi_device_lab_3-defs.o build/debug/gsi_device_lab_3_apuc_code_0.o build/debug/gsi_device_lab_3_apuc_code_1.o build/debug/gsi_device_lab_3_apuc_code_2.o build/debug/gsi_device_lab_3_apuc_code_3.o
+ar -rs build/debug/gsi_device_lab_3_host.a build/debug/gsi_device_lab_3_app_host.o build/debug/gsi_device_lab_3-defs.o build/debug/gsi_device_lab_3_apuc_code_0.o build/debug/gsi_device_lab_3_apuc_code_1.o build/debug/gsi_device_lab_3_apuc_code_2.o build/debug/gsi_device_lab_3_apuc_code_3.o
+info: create a dynamic version of the host library build/debug/gsi_device_lab_3_host.a
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -shared -Wl,--whole-archive build/debug/gsi_device_lab_3_host.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_x86_64.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsidevice.a -Wl,--no-whole-archive -o build/debug/gsi_device_lab_3_host.so
+Info: link application gsi_device_lab_3 into exe build/debug/gsi_device_lab_3
+gcc -mavx -O0 -DDEBUG_BUILD -fopenmp -fPIC -g -DGSI_LIBSYS_X86_64  -DGSI_WITH_GNU_TOOLCHAIN_FOR_ARC -DGSI_HAS_DIFFERENT_ARC_EXE_FOR_EACH_APU_CORE -Wall -Wextra -D_REENTRANT -D_BUILD_OS_GNU_LINUX -D__STDC_FORMAT_MACROS -D_GNU_SOURCE -D__EXTENSIONS__  \
+        -g \
+       \
+   -Wl,--whole-archive build/debug/gsi_device_lab_3_host.a -Wl,--no-whole-archive \
+        \
+        -Wl,--as-needed -Wl,--no-undefined -Wl,--start-group /usr/local/lib/x86_64-linux-gnu/gsi/libgsigvml_ref.a -ldl -lm /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsidevice.a /opt/gsi/gnu-ccac/ubuntu/lib/gsi/libgsisys_x86_64.a -lpthread -Wl,--end-group \
+        \
+        -o build/debug/gsi_device_lab_3
+Info: exe for application gsi_device_lab_3 is available at build/debug/gsi_device_lab_3
+614.882139
+0.012492
+0.002916
+613.247908
+613.244383
+Executing unit tests for leda.py
