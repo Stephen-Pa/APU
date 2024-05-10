@@ -383,7 +383,7 @@ int main(int argc, char *argv[])
 	supportVectors = malloc(sizeof(uint16_t) * args.num_support_vectors * args.num_features);
 	weights = malloc(sizeof(uint16_t) * args.num_support_vectors);
 	testData = malloc(sizeof(uint16_t) * args.num_testData * args.num_features);
-	classVector = malloc(sizeof(uint16_t) * args.num_testData*3);
+	classVector = malloc(sizeof(uint16_t) * args.num_testData);
 
 	const long long unsigned int const_mapped_size_req = 3L * 1024L * 1024L * 1024L;
 	long long unsigned int const_mapped_size_recv, dynamic_mapped_size_recv;
