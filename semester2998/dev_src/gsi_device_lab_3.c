@@ -128,16 +128,19 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		gvml_exp_f16(vr_distances, vr_distances);
 		//multiply by weights
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
+		
+		//Testing getting values from VR
 
-		int count =0;
+
+		/*	
 		//now log sum the vr
 		shiftNumberChange = shiftNumber;
 		while(shiftNumberChange){
 			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberChange);
-			count++;
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberChange>>=1;
 		}
+		
 		//now need to add the last 4 values
 		a = gvml_get_entry_16(vr_distances, 2);
 		b = gvml_get_entry_16(vr_distances, 3);
@@ -162,6 +165,7 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			*(outputValues+q) = 1;
 			//*(outputValues+q) = verdict;
 		}
+		*/
 	}
 	return 0;
 }

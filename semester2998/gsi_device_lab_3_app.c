@@ -286,13 +286,15 @@ static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uin
 	FILE *fileGamma = fopen(strcat(buf,"/supportGamma.txt"), "r");
 	strcpy(buf,SVMPath);
 	FILE *fileIntercept = fopen(strcat(buf,"/supportIntercept.txt"), "r");
+	int count = 0;
 	//Read data from file
     for (uint32_t i = 0; i < numVectors; i++) {
         for (uint32_t j = 0; j < numFeatures; j++) {
             if (fscanf(fileVectors, "%f", &dummy) != 1) {
-                fprintf(stderr, "Error reading support vectors file, at line %i, element: %i\n",i,j);
+                fprintf(stderr, "Error reading support vectors file, at line %i, element: %i count: %i\n",i,j,count);
 				exit(69);
             }
+	    count++;
 			vector[(i*numFeatures)+j] = convertFloat16(dummy);
         }
         if (fscanf(fileWeights, "%f", &dummy) != 1) {
