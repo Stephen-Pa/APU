@@ -19,6 +19,7 @@ static struct {
 	enum gvml_vr16 vr_weights;
 	enum gvml_vr16 vr_gamma;
 	enum gvml_vr16 vr_intercept;
+	enum gvml_mrks_n_flgs marker;
 } g_SVM_data = {
 	.num_support_vectors = 0,
 	.num_features = 0
@@ -52,6 +53,7 @@ static int load_SVM(struct gd_load_SVM *load_SVM_data)
 	g_SVM_data.vr_weights = vr_weights;
 	g_SVM_data.vr_gamma = vr_gamma;
 	g_SVM_data.vr_intercept = vr_intercept;
+	g_SVM_data.marker = marker;
 
 	gal_set_l2dma_dma_mode(GAL_L2DMA_MODE_DIRECT);
 
@@ -132,15 +134,16 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//Testing getting values from VR
 
 
-		/*	
+		
 		//now log sum the vr
 		shiftNumberChange = shiftNumber;
 		while(shiftNumberChange){
 			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberChange);
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberChange>>=1;
+			return 0;
 		}
-		
+		/*
 		//now need to add the last 4 values
 		a = gvml_get_entry_16(vr_distances, 2);
 		b = gvml_get_entry_16(vr_distances, 3);

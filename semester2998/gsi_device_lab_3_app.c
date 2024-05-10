@@ -138,11 +138,12 @@ static int do_classification(
 	gdl_mem_handle_t dev_cmd_buf = GDL_MEM_HANDLE_NULL, io_dev_bufs = GDL_MEM_HANDLE_NULL;
 	
 	uint64_t testData_size = sizeof(*testData) * num_testData * num_features;
+	uint64_t buffer_size = sizeof(*testData) * num_testData * num_features;
 	//the only reason this is multiplied by 2 is because there is a weird error on the APU
 	//when feeding in more than 6500 testData points with the Gamma dataset
 	uint64_t output_size = sizeof(*classVector)* num_testData;
 
-	uint64_t io_dev_buf_size = testData_size + output_size;
+	uint64_t io_dev_buf_size = testData_size + output_size + buffer_size;
 	
 	//allocate all the memory you will need for all input and output you have
 	//in this case, need space for testData and output
@@ -172,7 +173,12 @@ static int do_classification(
 
 	//same concept as above, but now testData_size away and new pointer is the classification output
 	//no mem copy becuase this pointer is where we are going to store out output
-	ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.testData, testData_size);
+	ret = gdl_add_to_mem_handle(&cmd.classify_data.buffer, cmd.classify_data.testData, testData_size);
+	if (ret) {
+		gsi_error("gdl_add_to_mem_handle() failed: %s", gsi_status_errorstr(ret));
+		goto CLEAN_UP;
+	}
+	ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.buffer, buffer_size);
 	if (ret) {
 		gsi_error("gdl_add_to_mem_handle() failed: %s", gsi_status_errorstr(ret));
 		goto CLEAN_UP;
