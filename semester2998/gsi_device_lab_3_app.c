@@ -228,7 +228,7 @@ static int do_classification(
 	}
 
 	FILE *fileOut = fopen("./output.txt", "w");
-	for(int i = 0; i < args.num_testData; i++){
+	for(int i = 0; i < num_testData; i++){
 		fprintf(fileOut,"%f\n",convertFloat16Back(classVector[i]));//this is debug
 		//fprintf(fileOut,"%x\n",classVector[i]);
 	}
