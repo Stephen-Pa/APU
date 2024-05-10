@@ -38,8 +38,6 @@ static int load_SVM(struct gd_load_SVM *load_SVM_data)
 
 	g_SVM_data.num_features = load_SVM_data->num_features;
 	g_SVM_data.num_support_vectors = load_SVM_data->num_support_vectors;
-	//exempt for now
-	//gvml_lt_imm_u16(g_db_data.mrk_num_records, g_db_data.vr_idx, (uint16_t)g_db_data.num_records);
 
 	uint16_t *ptr_in = gal_mem_handle_to_apu_ptr(load_SVM_data->supportVectors);
 	const uint16_t *weights = gal_mem_handle_to_apu_ptr(load_SVM_data->weights);
@@ -122,6 +120,8 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			//add value to distance
 			gvml_add_f16(vr_distances, vr_distances, vr_supportVectors);
 		}
+
+			
 		//mult by gamma
 		gvml_mul_f16(vr_distances, vr_distances, vr_gamma);
 		//exponential
@@ -129,29 +129,95 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//multiply by weights
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
 
-
 		//now log sum the vr
-		shiftNumberChange = shiftNumber;
+		shiftNumberChange = 512;
 		while(shiftNumberChange){
-			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberChange);
+			//gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberChange);
+			gvml_shift_head_imm_16_m1_g2k(vr_temp, vr_distances, shiftNumberChange);
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberChange>>=1;
 		}
-
-		gvml_get_16_32k(outputValues,vr_distances);
-		return 0;
-
+		
+		
 		//now need to add the last 4 values
+		a = gvml_get_entry_16(vr_distances, 4096);
+		b = gvml_get_entry_16(vr_distances, 4097);
+		gvml_set_entry_16(vr_distances, 4, a);
+		gvml_set_entry_16(vr_distances, 5, b);
+		a = gvml_get_entry_16(vr_distances, 4098);
+                b = gvml_get_entry_16(vr_distances, 4099);
+                gvml_set_entry_16(vr_distances, 6, a);
+                gvml_set_entry_16(vr_distances, 7, b);
+
+		a = gvml_get_entry_16(vr_distances, 8192);
+                b = gvml_get_entry_16(vr_distances, 8193);
+                gvml_set_entry_16(vr_distances, 8, a);
+                gvml_set_entry_16(vr_distances, 9, b);
+                a = gvml_get_entry_16(vr_distances, 8194);
+                b = gvml_get_entry_16(vr_distances, 8195);
+                gvml_set_entry_16(vr_temp, 0, a);
+                gvml_set_entry_16(vr_temp, 1, b);
+
+		a = gvml_get_entry_16(vr_distances, 12288);
+                b = gvml_get_entry_16(vr_distances, 12289);
+                gvml_set_entry_16(vr_temp, 2, a);
+                gvml_set_entry_16(vr_temp, 3, b);
+                a = gvml_get_entry_16(vr_distances, 12290);
+                b = gvml_get_entry_16(vr_distances, 12291);
+                gvml_set_entry_16(vr_temp, 4, a);
+                gvml_set_entry_16(vr_temp, 5, b);
+
+		a = gvml_get_entry_16(vr_distances, 16384);
+                b = gvml_get_entry_16(vr_distances, 16385);
+                gvml_set_entry_16(vr_temp, 6, a);
+                gvml_set_entry_16(vr_temp, 7, b);
+                a = gvml_get_entry_16(vr_distances, 16386);
+                b = gvml_get_entry_16(vr_distances, 16387);
+                gvml_set_entry_16(vr_temp, 8, a);
+                gvml_set_entry_16(vr_temp, 9, b);
+
+
+		gvml_add_f16(vr_distances,vr_distances,vr_temp);
+
+		a = gvml_get_entry_16(vr_distances, 5);
+                b = gvml_get_entry_16(vr_distances, 6);
+                gvml_set_entry_16(vr_temp, 0, a);
+                gvml_set_entry_16(vr_temp, 1, b);
+                a = gvml_get_entry_16(vr_distances, 7);
+                b = gvml_get_entry_16(vr_distances, 8);
+                gvml_set_entry_16(vr_temp, 2, a);
+                gvml_set_entry_16(vr_temp, 3, b);
+		a = gvml_get_entry_16(vr_distances, 9);
+		gvml_set_entry_16(vr_temp, 4, a);
+
+		gvml_add_f16(vr_distances, vr_distances, vr_temp);
+
+
+		a = gvml_get_entry_16(vr_distances, 3);
+                b = gvml_get_entry_16(vr_distances, 4);
+                gvml_set_entry_16(vr_temp, 0, a);
+                gvml_set_entry_16(vr_temp, 1, b);
+		gvml_set_entry_16(vr_temp, 2, 0);
+
+                gvml_add_f16(vr_distances, vr_distances, vr_temp);
+
+
 		a = gvml_get_entry_16(vr_distances, 2);
-		b = gvml_get_entry_16(vr_distances, 3);
-		gvml_set_entry_16(vr_temp, 0, a);
-		gvml_set_entry_16(vr_temp, 1, b);
-		gvml_add_f16(vr_distances,vr_distances,vr_temp);
+                gvml_set_entry_16(vr_temp, 0, a);
+		gvml_set_entry_16(vr_temp, 1, 0);
+
+                gvml_add_f16(vr_distances, vr_distances, vr_temp);
+
+
 		a = gvml_get_entry_16(vr_distances, 1);
-		gvml_set_entry_16(vr_temp, 0, a);
-		gvml_add_f16(vr_distances,vr_distances,vr_temp);
+                gvml_set_entry_16(vr_temp, 0, a);
+
+                gvml_add_f16(vr_distances, vr_distances, vr_temp);
+
 		//add the intercept
 		gvml_add_f16(vr_distances, vr_distances, vr_intercept);
+
+
 		//last value in first position
 		verdict = gvml_get_entry_16(vr_distances, 0);
 
