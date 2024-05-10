@@ -138,12 +138,11 @@ static int do_classification(
 	gdl_mem_handle_t dev_cmd_buf = GDL_MEM_HANDLE_NULL, io_dev_bufs = GDL_MEM_HANDLE_NULL;
 	
 	uint64_t testData_size = sizeof(*testData) * num_testData * num_features;
-	uint64_t buffer_size = sizeof(*testData) * num_testData * num_features;
 	//the only reason this is multiplied by 2 is because there is a weird error on the APU
 	//when feeding in more than 6500 testData points with the Gamma dataset
 	uint64_t output_size = sizeof(*classVector)* num_testData;
 
-	uint64_t io_dev_buf_size = testData_size + output_size + buffer_size;
+	uint64_t io_dev_buf_size = testData_size + output_size;
 	
 	//allocate all the memory you will need for all input and output you have
 	//in this case, need space for testData and output
@@ -173,12 +172,7 @@ static int do_classification(
 
 	//same concept as above, but now testData_size away and new pointer is the classification output
 	//no mem copy becuase this pointer is where we are going to store out output
-	ret = gdl_add_to_mem_handle(&cmd.classify_data.buffer, cmd.classify_data.testData, testData_size);
-	if (ret) {
-		gsi_error("gdl_add_to_mem_handle() failed: %s", gsi_status_errorstr(ret));
-		goto CLEAN_UP;
-	}
-	ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.buffer, buffer_size);
+	ret = gdl_add_to_mem_handle(&cmd.classify_data.classification, cmd.classify_data.testData, testData_size);
 	if (ret) {
 		gsi_error("gdl_add_to_mem_handle() failed: %s", gsi_status_errorstr(ret));
 		goto CLEAN_UP;
@@ -292,15 +286,13 @@ static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uin
 	FILE *fileGamma = fopen(strcat(buf,"/supportGamma.txt"), "r");
 	strcpy(buf,SVMPath);
 	FILE *fileIntercept = fopen(strcat(buf,"/supportIntercept.txt"), "r");
-	int count = 0;
 	//Read data from file
     for (uint32_t i = 0; i < numVectors; i++) {
         for (uint32_t j = 0; j < numFeatures; j++) {
             if (fscanf(fileVectors, "%f", &dummy) != 1) {
-                fprintf(stderr, "Error reading support vectors file, at line %i, element: %i count: %i\n",i,j,count);
+                fprintf(stderr, "Error reading support vectors file, at line %i, element: %i\n",i,j);
 				exit(69);
             }
-	    count++;
 			vector[(i*numFeatures)+j] = convertFloat16(dummy);
         }
         if (fscanf(fileWeights, "%f", &dummy) != 1) {

@@ -54,7 +54,6 @@ struct gd_load_SVM {
 struct gd_classify_testData {
 	uint64_t classification;	/* gdl_mem_handle_t(host) / gal_mem_handle_t(dev) */
 	uint64_t testData;	/* gdl_mem_handle_t(host) / gal_mem_handle_t(dev) */
-	uint64_t buffer;
 	uint32_t num_testData;
 } __attribute__((packed));
 
