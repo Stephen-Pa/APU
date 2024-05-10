@@ -129,8 +129,6 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//multiply by weights
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
 
-		gvml_get_16_32k(outputValues,vr_distances);
-		return 0;
 
 		//now log sum the vr
 		shiftNumberChange = shiftNumber;
@@ -140,7 +138,8 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			shiftNumberChange>>=1;
 		}
 
-
+		gvml_get_16_32k(outputValues,vr_distances);
+		return 0;
 
 		//now need to add the last 4 values
 		a = gvml_get_entry_16(vr_distances, 2);
