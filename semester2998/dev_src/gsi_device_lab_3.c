@@ -122,6 +122,8 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			//add value to distance
 			gvml_add_f16(vr_distances, vr_distances, vr_supportVectors);
 		}
+		gvml_get_16_32k(outputValues,vr_distances);
+		return 0;
 		//mult by gamma
 		gvml_mul_f16(vr_distances, vr_distances, vr_gamma);
 		//exponential
@@ -137,8 +139,6 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			shiftNumberChange>>=1;
 		}
 
-		gvml_get_16_32k(outputValues,vr_distances);
-		return 0;
 
 
 		//now need to add the last 4 values
