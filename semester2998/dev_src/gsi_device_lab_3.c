@@ -137,10 +137,7 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			shiftNumberChange>>=1;
 		}
 
-		*(outputValues) = gvml_get_entry_16(vr_distances, 0);
-		*(outputValues+1) = gvml_get_entry_16(vr_distances, 1);
-		*(outputValues+2) = gvml_get_entry_16(vr_distances, 2);
-		*(outputValues+3) = gvml_get_entry_16(vr_distances, 3);
+		gvml_get_16_32k(outputValues,vr_distances);
 		return 0;
 
 
