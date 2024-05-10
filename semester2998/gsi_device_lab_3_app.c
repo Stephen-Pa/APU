@@ -216,6 +216,14 @@ static int do_classification(
 		goto CLEAN_UP;
 	}
 
+	FILE *fileOut = fopen("./output.txt", "w");
+	for(int i = 0; i < args.num_testData; i++){
+		fprintf(fileOut,"%f\n",convertFloat16Back(classVector[i]));//this is debug
+		//fprintf(fileOut,"%x\n",classVector[i]);
+	}
+	printf("Finished checking results\n");
+	
+
 CLEAN_UP:
 	gdl_mem_free(dev_cmd_buf);
 	gdl_mem_free(io_dev_bufs);
@@ -460,13 +468,6 @@ int main(int argc, char *argv[])
 	printf("%lf\n",((double)(stopClassification.tv_sec - startClassification.tv_sec)) + ((double)(stopClassification.tv_nsec - startClassification.tv_nsec)) / 1000000000L);
 	//Classification without Overhead
 	printf("%lf\n",((double)(APU_Timing.stopClassificationDevice.tv_sec - APU_Timing.startClassificationDevice.tv_sec)) + ((double)(APU_Timing.stopClassificationDevice.tv_nsec - APU_Timing.startClassificationDevice.tv_nsec)) / 1000000000L);
-
-	FILE *fileOut = fopen("./output.txt", "w");
-	for(int i = 0; i < args.num_testData; i++){
-		fprintf(fileOut,"%f\n",convertFloat16Back(classVector[i]));//this is debug
-		//fprintf(fileOut,"%x\n",classVector[i]);
-	}
-	printf("Finished checking results\n");
 
 
 
