@@ -461,7 +461,12 @@ int main(int argc, char *argv[])
 	//Classification without Overhead
 	printf("%lf\n",((double)(APU_Timing.stopClassificationDevice.tv_sec - APU_Timing.startClassificationDevice.tv_sec)) + ((double)(APU_Timing.stopClassificationDevice.tv_nsec - APU_Timing.startClassificationDevice.tv_nsec)) / 1000000000L);
 
-
+	FILE *fileOut = fopen("./output.txt", "w");
+	for(int i = 0; i < args.num_testData; i++){
+		fprintf(fileOut,"%f\n",convertFloat16Back(classVector[i]));//this is debug
+		//fprintf(fileOut,"%x\n",classVector[i]);
+	}
+	printf("Finished checking results\n");
 
 
 

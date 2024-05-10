@@ -129,12 +129,10 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//multiply by weights
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
 
-		int count =0;
 		//now log sum the vr
 		shiftNumberChange = shiftNumber;
 		while(shiftNumberChange){
 			gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberChange);
-			count++;
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberChange>>=1;
 		}
@@ -155,12 +153,12 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//determine class
 		//if negative, class 0
 		if(verdict & 0x8000){
-			*(outputValues+q) = 0;
-			//*(outputValues+q) = verdict;
+			//*(outputValues+q) = 0;
+			*(outputValues+q) = verdict;
 		}
 		else{
-			*(outputValues+q) = 1;
-			//*(outputValues+q) = verdict;
+			//*(outputValues+q) = 1;
+			*(outputValues+q) = verdict;
 		}
 	}
 	return 0;
