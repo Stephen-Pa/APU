@@ -126,6 +126,17 @@ CLEAN_UP:
 	return ret;
 }
 
+static float convertFloat16Back(int a){
+    int fraction = a & 0x3ff;
+    int exponent = (a&0x7c00)>>10;
+    int sign = (a&0x8000)<<16;
+    float* ptr = NULL;
+    exponent = (exponent - 15) +127;
+    fraction = (sign | (exponent<<23) | (fraction<<13));
+    ptr = (float*)&fraction;
+    return *ptr;
+}
+
 static int do_classification(
 	gdl_context_handle_t ctx_id,
 	uint16_t classVector[],
@@ -269,17 +280,6 @@ static int convertFloat16(float a){
 	fltInt16 = (fltInt16 | tmp) << 10;
 	fltInt16 |= (fltInt32 >> 13) & 0x3ff;
 	return fltInt16;
-}
-
-static float convertFloat16Back(int a){
-    int fraction = a & 0x3ff;
-    int exponent = (a&0x7c00)>>10;
-    int sign = (a&0x8000)<<16;
-    float* ptr = NULL;
-    exponent = (exponent - 15) +127;
-    fraction = (sign | (exponent<<23) | (fraction<<13));
-    ptr = (float*)&fraction;
-    return *ptr;
 }
 
 static void getSupportVectorsAndWeights(uint16_t* vector, uint16_t* weights, uint32_t* gamma, uint32_t* intercept, uint32_t numVectors, uint32_t numFeatures, char* SVMPath){
