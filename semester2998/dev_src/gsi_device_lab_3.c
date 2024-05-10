@@ -136,6 +136,14 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberChange>>=1;
 		}
+
+		*(outputValues) = gvml_get_entry_16(vr_distances, 0);
+		*(outputValues+1) = gvml_get_entry_16(vr_distances, 1);
+		*(outputValues+2) = gvml_get_entry_16(vr_distances, 2);
+		*(outputValues+3) = gvml_get_entry_16(vr_distances, 3);
+		return 0;
+
+
 		//now need to add the last 4 values
 		a = gvml_get_entry_16(vr_distances, 2);
 		b = gvml_get_entry_16(vr_distances, 3);
