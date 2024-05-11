@@ -91,18 +91,26 @@ static int do_classification(struct gd_classify_testData *classify_data)
 	const uint16_t *testInputs = gal_mem_handle_to_apu_ptr(classify_data->testData);
 	//gsi_info("gal_mem_handle size: %i, location pointer %x",sizeof(testInputs),testInputs);
 	uint16_t *outputValues = gal_mem_handle_to_apu_ptr(classify_data->classification);
-	uint32_t shiftNumber = 1;
-	uint32_t shiftNumberChange = 0;
+	uint32_t numberEndElementsAdd;
+	uint32_t shiftNumberHalfBanks;
 	uint32_t verdict = g_SVM_data.num_support_vectors;
 	uint16_t a = 0;
 	uint16_t b = 0;
 
-	//get this value for determining log add
-	while(verdict){
-		verdict>>=1;
-		shiftNumber*=2;
+	//get resulting numbers to add at the end
+	if(g_SVM_data.num_supportVectors < 4096){
+		numberEndElementsAdd = 2;
 	}
-	shiftNumber>>=3;
+	else if(g_SVM-data.num_supportVectors < 8192){
+		numberEndElementsAdd = 3;
+	}
+	else if(g_SVM_data.num_supportVectors < 16324){
+		numberEndElementsAdd = 4;
+	}
+	else{
+		numberEndElementsAdd = 5;
+	}
+
 	
 	//start code
 	for (uint32_t q = 0; q < classify_data->num_testData; ++q, testInputs += g_SVM_data.num_features) {
@@ -130,14 +138,28 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
 
 		//now log sum the vr
-		shiftNumberChange = 512;
+		shiftNumberHalfBanks = 512;
 		while(shiftNumberChange){
 			//gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberChange);
 			gvml_shift_head_imm_16_m1_g2k(vr_temp, vr_distances, shiftNumberChange);
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
-			shiftNumberChange>>=1;
+			shiftNumberHalfBanks>>=1;
 		}
 		
+		for(i = numberEndElementsAdd; i ; i--){
+			if(i==5){
+				ss
+			}
+			else if(i==4){
+
+			}
+			else if(i==3){
+
+			}
+			else{
+
+			}
+		}
 		
 		//now need to add the last 4 values
 		a = gvml_get_entry_16(vr_distances, 4096);
