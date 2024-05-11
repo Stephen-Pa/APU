@@ -96,6 +96,9 @@ static int do_classification(struct gd_classify_testData *classify_data)
 	uint32_t verdict = g_SVM_data.num_support_vectors;
 	uint16_t a = 0;
 	uint16_t b = 0;
+	uint16_t c = 0;
+	uint16_t d = 0;
+	uint16_t halfBankFlag;
 
 	//get resulting numbers to add at the end
 	if(g_SVM_data.num_supportVectors < 4096){
@@ -145,100 +148,173 @@ static int do_classification(struct gd_classify_testData *classify_data)
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberHalfBanks>>=1;
 		}
-		
+
+		//now add the remaining 4 entries in each halfbank that apply
+
+		//indicates numbers to be added are already in the first halfbank
+		halfBankFlag = 0;
 		for(i = numberEndElementsAdd; i ; i--){
 			if(i==5){
-				ss
+				a = gvml_get_entry_16(vr_distances, 4096);
+				b = gvml_get_entry_16(vr_distances, 4097);
+				c = gvml_get_entry_16(vr_distances, 4098);
+				d = gvml_get_entry_16(vr_distances, 4099);
+				gvml_set_entry_16(vr_distances, 4, a);
+				gvml_set_entry_16(vr_distances, 5, b);
+				gvml_set_entry_16(vr_distances, 6, c);
+				gvml_set_entry_16(vr_distances, 7, d);
+
+				a = gvml_get_entry_16(vr_distances, 8192);
+				b = gvml_get_entry_16(vr_distances, 8193);
+				c = gvml_get_entry_16(vr_distances, 8194);
+				d = gvml_get_entry_16(vr_distances, 8195);
+				gvml_set_entry_16(vr_distances, 8, a);
+				gvml_set_entry_16(vr_distances, 9, b);
+				gvml_set_entry_16(vr_distances, 10, c);
+				gvml_set_entry_16(vr_distances, 11, d);
+
+				a = gvml_get_entry_16(vr_distances, 12288);
+				b = gvml_get_entry_16(vr_distances, 12289);
+				c = gvml_get_entry_16(vr_distances, 12290);
+				d = gvml_get_entry_16(vr_distances, 12291);
+				gvml_set_entry_16(vr_distances, 12, a);
+				gvml_set_entry_16(vr_distances, 13, b);
+				gvml_set_entry_16(vr_distances, 14, c);
+				gvml_set_entry_16(vr_distances, 15, d);
+
+				a = gvml_get_entry_16(vr_distances, 16384);
+				b = gvml_get_entry_16(vr_distances, 16385);
+				c = gvml_get_entry_16(vr_distances, 16386);
+				d = gvml_get_entry_16(vr_distances, 16387);
+				gvml_set_entry_16(vr_temp, 0, a);
+				gvml_set_entry_16(vr_temp, 1, b);
+				gvml_set_entry_16(vr_temp, 2, c);
+				gvml_set_entry_16(vr_temp, 3, d);
+
+				a = gvml_get_entry_16(vr_distances, 20480);
+				b = gvml_get_entry_16(vr_distances, 20481);
+				c = gvml_get_entry_16(vr_distances, 20482);
+				d = gvml_get_entry_16(vr_distances, 20483);
+				gvml_set_entry_16(vr_temp, 4, a);
+				gvml_set_entry_16(vr_temp, 5, b);
+				gvml_set_entry_16(vr_temp, 6, c);
+				gvml_set_entry_16(vr_temp, 7, d);
+
+				a = gvml_get_entry_16(vr_distances, 24576);
+				b = gvml_get_entry_16(vr_distances, 24577);
+				c = gvml_get_entry_16(vr_distances, 24578);
+				d = gvml_get_entry_16(vr_distances, 24579);
+				gvml_set_entry_16(vr_temp, 8, a);
+				gvml_set_entry_16(vr_temp, 9, b);
+				gvml_set_entry_16(vr_temp, 10, c);
+				gvml_set_entry_16(vr_temp, 11, d);
+
+				a = gvml_get_entry_16(vr_distances, 28672);
+				b = gvml_get_entry_16(vr_distances, 28673);
+				c = gvml_get_entry_16(vr_distances, 28674);
+				d = gvml_get_entry_16(vr_distances, 28675);
+				gvml_set_entry_16(vr_temp, 12, a);
+				gvml_set_entry_16(vr_temp, 13, b);
+				gvml_set_entry_16(vr_temp, 14, c);
+				gvml_set_entry_16(vr_temp, 15, d);
+
+				gvml_add_f16(vr_distances, vr_distances, vr_temp);
+				halfBankFlag = 1;
 			}
 			else if(i==4){
+				if(halfBankFlag){
+					a = gvml_get_entry_16(vr_distances, 8);
+					b = gvml_get_entry_16(vr_distances, 9);
+					c = gvml_get_entry_16(vr_distances, 10);
+					d = gvml_get_entry_16(vr_distances, 11);
+					gvml_set_entry_16(vr_temp, 0, a);
+					gvml_set_entry_16(vr_temp, 1, b);
+					gvml_set_entry_16(vr_temp, 2, c);
+					gvml_set_entry_16(vr_temp, 3, d);
+
+					a = gvml_get_entry_16(vr_distances, 12);
+					b = gvml_get_entry_16(vr_distances, 13);
+					c = gvml_get_entry_16(vr_distances, 14);
+					d = gvml_get_entry_16(vr_distances, 15);
+					gvml_set_entry_16(vr_temp, 4, a);
+					gvml_set_entry_16(vr_temp, 5, b);
+					gvml_set_entry_16(vr_temp, 6, c);
+					gvml_set_entry_16(vr_temp, 7, d);
+				}
+				else{
+					a = gvml_get_entry_16(vr_distances, 4096);
+					b = gvml_get_entry_16(vr_distances, 4097);
+					c = gvml_get_entry_16(vr_distances, 4098);
+					d = gvml_get_entry_16(vr_distances, 4099);
+					gvml_set_entry_16(vr_distances, 4, a);
+					gvml_set_entry_16(vr_distances, 5, b);
+					gvml_set_entry_16(vr_distances, 6, c);
+					gvml_set_entry_16(vr_distances, 7, d);
+
+					a = gvml_get_entry_16(vr_distances, 8192);
+					b = gvml_get_entry_16(vr_distances, 8193);
+					c = gvml_get_entry_16(vr_distances, 8194);
+					d = gvml_get_entry_16(vr_distances, 8195);
+					gvml_set_entry_16(vr_temp, 0, a);
+					gvml_set_entry_16(vr_temp, 1, b);
+					gvml_set_entry_16(vr_temp, 2, c);
+					gvml_set_entry_16(vr_temp, 3, d);
+
+					a = gvml_get_entry_16(vr_distances, 12288);
+					b = gvml_get_entry_16(vr_distances, 12289);
+					c = gvml_get_entry_16(vr_distances, 12290);
+					d = gvml_get_entry_16(vr_distances, 12291);
+					gvml_set_entry_16(vr_temp, 4, a);
+					gvml_set_entry_16(vr_temp, 5, b);
+					gvml_set_entry_16(vr_temp, 6, c);
+					gvml_set_entry_16(vr_temp, 7, d);
+
+					halfBankFlag = 1;
+				}
+				gvml_add_f16(vr_distances, vr_distances, vr_temp);
 
 			}
 			else if(i==3){
-
+				if(halfBankFlag){
+					a = gvml_get_entry_16(vr_distances, 4);
+					b = gvml_get_entry_16(vr_distances, 5);
+					c = gvml_get_entry_16(vr_distances, 6);
+					d = gvml_get_entry_16(vr_distances, 7);
+					gvml_set_entry_16(vr_temp, 0, a);
+					gvml_set_entry_16(vr_temp, 1, b);
+					gvml_set_entry_16(vr_temp, 2, c);
+					gvml_set_entry_16(vr_temp, 3, d);
+				}
+				else{
+					a = gvml_get_entry_16(vr_distances, 4096);
+					b = gvml_get_entry_16(vr_distances, 4097);
+					c = gvml_get_entry_16(vr_distances, 4098);
+					d = gvml_get_entry_16(vr_distances, 4099);
+					gvml_set_entry_16(vr_temp, 0, a);
+					gvml_set_entry_16(vr_temp, 1, b);
+					gvml_set_entry_16(vr_temp, 2, c);
+					gvml_set_entry_16(vr_temp, 3, d);
+					
+				}
+				gvml_add_f16(vr_distances, vr_distances, vr_temp);
+			}
+			else if(i==2){
+				a = gvml_get_entry_16(vr_distances, 2);
+				b = gvml_get_entry_16(vr_distances, 3);
+				gvml_set_entry_16(vr_temp, 0, a);
+				gvml_set_entry_16(vr_temp, 1, b);
+				
+				gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			}
 			else{
+				a = gvml_get_entry_16(vr_distances, 1);
+				gvml_set_entry_16(vr_temp, 0, a);
 
+				gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			}
 		}
-		
-		//now need to add the last 4 values
-		a = gvml_get_entry_16(vr_distances, 4096);
-		b = gvml_get_entry_16(vr_distances, 4097);
-		gvml_set_entry_16(vr_distances, 4, a);
-		gvml_set_entry_16(vr_distances, 5, b);
-		a = gvml_get_entry_16(vr_distances, 4098);
-                b = gvml_get_entry_16(vr_distances, 4099);
-                gvml_set_entry_16(vr_distances, 6, a);
-                gvml_set_entry_16(vr_distances, 7, b);
-
-		a = gvml_get_entry_16(vr_distances, 8192);
-                b = gvml_get_entry_16(vr_distances, 8193);
-                gvml_set_entry_16(vr_distances, 8, a);
-                gvml_set_entry_16(vr_distances, 9, b);
-                a = gvml_get_entry_16(vr_distances, 8194);
-                b = gvml_get_entry_16(vr_distances, 8195);
-                gvml_set_entry_16(vr_temp, 0, a);
-                gvml_set_entry_16(vr_temp, 1, b);
-
-		a = gvml_get_entry_16(vr_distances, 12288);
-                b = gvml_get_entry_16(vr_distances, 12289);
-                gvml_set_entry_16(vr_temp, 2, a);
-                gvml_set_entry_16(vr_temp, 3, b);
-                a = gvml_get_entry_16(vr_distances, 12290);
-                b = gvml_get_entry_16(vr_distances, 12291);
-                gvml_set_entry_16(vr_temp, 4, a);
-                gvml_set_entry_16(vr_temp, 5, b);
-
-		a = gvml_get_entry_16(vr_distances, 16384);
-                b = gvml_get_entry_16(vr_distances, 16385);
-                gvml_set_entry_16(vr_temp, 6, a);
-                gvml_set_entry_16(vr_temp, 7, b);
-                a = gvml_get_entry_16(vr_distances, 16386);
-                b = gvml_get_entry_16(vr_distances, 16387);
-                gvml_set_entry_16(vr_temp, 8, a);
-                gvml_set_entry_16(vr_temp, 9, b);
-
-
-		gvml_add_f16(vr_distances,vr_distances,vr_temp);
-
-		a = gvml_get_entry_16(vr_distances, 5);
-                b = gvml_get_entry_16(vr_distances, 6);
-                gvml_set_entry_16(vr_temp, 0, a);
-                gvml_set_entry_16(vr_temp, 1, b);
-                a = gvml_get_entry_16(vr_distances, 7);
-                b = gvml_get_entry_16(vr_distances, 8);
-                gvml_set_entry_16(vr_temp, 2, a);
-                gvml_set_entry_16(vr_temp, 3, b);
-		a = gvml_get_entry_16(vr_distances, 9);
-		gvml_set_entry_16(vr_temp, 4, a);
-
-		gvml_add_f16(vr_distances, vr_distances, vr_temp);
-
-
-		a = gvml_get_entry_16(vr_distances, 3);
-                b = gvml_get_entry_16(vr_distances, 4);
-                gvml_set_entry_16(vr_temp, 0, a);
-                gvml_set_entry_16(vr_temp, 1, b);
-		gvml_set_entry_16(vr_temp, 2, 0);
-
-                gvml_add_f16(vr_distances, vr_distances, vr_temp);
-
-
-		a = gvml_get_entry_16(vr_distances, 2);
-                gvml_set_entry_16(vr_temp, 0, a);
-		gvml_set_entry_16(vr_temp, 1, 0);
-
-                gvml_add_f16(vr_distances, vr_distances, vr_temp);
-
-
-		a = gvml_get_entry_16(vr_distances, 1);
-                gvml_set_entry_16(vr_temp, 0, a);
-
-                gvml_add_f16(vr_distances, vr_distances, vr_temp);
-
 		//add the intercept
 		gvml_add_f16(vr_distances, vr_distances, vr_intercept);
-
 
 		//last value in first position
 		verdict = gvml_get_entry_16(vr_distances, 0);
