@@ -89,7 +89,6 @@ static int do_classification(struct gd_classify_testData *classify_data)
 	enum gvml_vr16 vr_temp = GVML_VR16_7;
 
 	const uint16_t *testInputs = gal_mem_handle_to_apu_ptr(classify_data->testData);
-	//gsi_info("gal_mem_handle size: %i, location pointer %x",sizeof(testInputs),testInputs);
 	uint16_t *outputValues = gal_mem_handle_to_apu_ptr(classify_data->classification);
 	uint32_t numberEndElementsAdd;
 	uint32_t shiftNumberHalfBanks;
@@ -112,7 +111,6 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		numberEndElementsAdd = 5;
 	}
 
-	
 	//start code
 	for (uint32_t q = 0; q < classify_data->num_testData; ++q, testInputs += g_SVM_data.num_features) {
 		gvml_reset_16(vr_distances);
@@ -138,10 +136,9 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//multiply by weights
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
 
-		//now log sum the vr
+		//now log sum halfbanks
 		shiftNumberHalfBanks = 512;
 		while(shiftNumberHalfBanks){
-			//gvml_shift_head_imm_16_m1_g32k(vr_temp, vr_distances, shiftNumberHalfBanks);
 			gvml_shift_head_imm_16_m1_g2k(vr_temp, vr_distances, shiftNumberHalfBanks);
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			shiftNumberHalfBanks>>=1;
@@ -270,7 +267,6 @@ static int do_classification(struct gd_classify_testData *classify_data)
 					halfBankFlag = 1;
 				}
 				gvml_add_f16(vr_distances, vr_distances, vr_temp);
-
 			}
 			else if(i==3){
 				if(halfBankFlag){
@@ -292,7 +288,6 @@ static int do_classification(struct gd_classify_testData *classify_data)
 					gvml_set_entry_16(vr_temp, 1, b);
 					gvml_set_entry_16(vr_temp, 2, c);
 					gvml_set_entry_16(vr_temp, 3, d);
-					
 				}
 				gvml_add_f16(vr_distances, vr_distances, vr_temp);
 			}
@@ -320,12 +315,12 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		//determine class
 		//if negative, class 0
 		if(verdict & 0x8000){
-			//*(outputValues+q) = 0;
-			*(outputValues+q) = verdict;
+			*(outputValues+q) = 0;
+			//*(outputValues+q) = verdict;
 		}
 		else{
-			//*(outputValues+q) = 1;
-			*(outputValues+q) = verdict;
+			*(outputValues+q) = 1;
+			//*(outputValues+q) = verdict;
 		}
 	}
 	return 0;
