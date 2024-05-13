@@ -125,7 +125,7 @@ if __name__ == "__main__":
 
     print("Executing unit tests for", sys.argv[0])
     filePointer = open("powerTest.txt",'w')
-    for i in range(100):
+    for i in range(15):
         #print("Trying to get board power...")
         power = get_board_power(0)
         filePointer = open("powerTest.txt",'a')

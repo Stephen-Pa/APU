@@ -209,6 +209,13 @@ do
         ./build/debug/gsi_device_lab_3 17489 10 4755 "./Gamma_SVM/Full" >> $outFileTimingGamma
 done
 #ALL MINIBOON
+echo "MiniBoon 32659 48 100000" >> $outFileTimingMiniBoon
+for i in {1..100}
+do
+        echo "$i">> $outFileTimingMiniBoon
+        ./build/debug/gsi_device_lab_3 32659 48 100000 "./MiniBoon_SVM/Full" >> $outFileTimingMiniBoon
+done
+
 echo "MiniBoon 32659 48 32768" >> $outFileTimingMiniBoon
 for i in {1..100}
 do
