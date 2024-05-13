@@ -125,9 +125,9 @@ if __name__ == "__main__":
 
     print("Executing unit tests for", sys.argv[0])
     filePointer = open("powerTest.txt",'w')
-    for i in range(15):
+    for i in range(1):
         #print("Trying to get board power...")
         power = get_board_power(0)
-        filePointer = open("powerTest.txt",'a')
+        filePointer = open("testPowerOutput.txt",'a')
         filePointer.write(str(power)+"\n")
         filePointer.close()
