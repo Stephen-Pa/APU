@@ -94,12 +94,21 @@ static int do_classification(struct gd_classify_testData *classify_data)
 	uint32_t shiftNumberHalfBanks;
 	uint32_t verdict = g_SVM_data.num_support_vectors;
 	uint16_t a, b, c, d;
+	uint16_t shiftNumber = 512;
 	uint16_t halfBankFlag;
 	int i,j;
 
 	//get resulting numbers to add at the end
 	if(g_SVM_data.num_support_vectors < 4096){
 		numberEndElementsAdd = 2;
+		//also need to do a computation to reduce shiftNumberHalfBanks
+		a = g_SVM_data.num_support_vectors;
+		shiftNumber = 1
+		while(a){
+			a>>=1;
+			shiftNumber<<=1;
+		}
+		shiftNumber>>=2;
 	}
 	else if(g_SVM_data.num_support_vectors < 8192){
 		numberEndElementsAdd = 3;
@@ -110,6 +119,7 @@ static int do_classification(struct gd_classify_testData *classify_data)
 	else{
 		numberEndElementsAdd = 5;
 	}
+	
 
 	//start code
 	for (uint32_t q = 0; q < classify_data->num_testData; ++q, testInputs += g_SVM_data.num_features) {
@@ -137,7 +147,7 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		gvml_mul_f16(vr_distances, vr_distances, vr_weights);
 
 		//now log sum halfbanks
-		shiftNumberHalfBanks = 512;
+		shiftNumberHalfBanks = shiftNumber;
 		while(shiftNumberHalfBanks){
 			gvml_shift_head_imm_16_m1_g2k(vr_temp, vr_distances, shiftNumberHalfBanks);
 			gvml_add_f16(vr_distances, vr_distances, vr_temp);
