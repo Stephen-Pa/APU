@@ -226,7 +226,7 @@ static int do_classification(
 		gsi_error("gdl_mem_cpy_from_dev() failed: %s", gsi_status_errorstr(ret));
 		goto CLEAN_UP;
 	}
-	/*
+	/*	
 	FILE *fileOut = fopen("./output.txt", "w");
 	for(int i = 0; i < num_testData; i++){
 		//fprintf(fileOut,"%f\n",convertFloat16Back(classVector[i]));//this is debug
