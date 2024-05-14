@@ -103,12 +103,12 @@ static int do_classification(struct gd_classify_testData *classify_data)
 		numberEndElementsAdd = 2;
 		//also need to do a computation to reduce shiftNumberHalfBanks
 		a = g_SVM_data.num_support_vectors;
-		shiftNumber = 1
+		shiftNumber = 1;
 		while(a){
 			a>>=1;
 			shiftNumber<<=1;
 		}
-		shiftNumber>>=2;
+		shiftNumber>>=3;
 	}
 	else if(g_SVM_data.num_support_vectors < 8192){
 		numberEndElementsAdd = 3;
