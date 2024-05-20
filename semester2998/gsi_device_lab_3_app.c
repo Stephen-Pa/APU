@@ -411,6 +411,11 @@ int main(int argc, char *argv[])
 	uint32_t num_ctxs;
 	struct gdl_context_desc contexts_desc[GDL_MAX_NUM_CONTEXTS];
 
+	//load support vectors, weights, gamma, and intercept from files
+	getSupportVectorsAndWeights(supportVectors, weights, &gamma, &intercept, args.num_support_vectors, args.num_features, argv[4]);
+	//load test data to make inference on from file
+	getTestDataAndOthers(testData, args.num_testData, args.num_features, argv[4]);
+
 	clock_gettime(CLOCK_REALTIME, &startEntire);
 	gdl_init();
 	gdl_context_count_get(&num_ctxs);
@@ -435,9 +440,6 @@ int main(int argc, char *argv[])
 		gsi_fatal("gdl_context_alloc failed: %s", gsi_status_errorstr(ret));
 	}
 
-	//load support vectors, weights, gamma, and intercept from files
-	getSupportVectorsAndWeights(supportVectors, weights, &gamma, &intercept, args.num_support_vectors, args.num_features, argv[4]);
-
 	clock_gettime(CLOCK_REALTIME, &startDataTransfer);
 	ret = load_SVM(valid_ctx_id, supportVectors, weights, gamma, intercept, args.num_support_vectors, args.num_features);
 	if (ret) {
@@ -446,8 +448,6 @@ int main(int argc, char *argv[])
 	}
 	clock_gettime(CLOCK_REALTIME, &stopDataTransfer);
 
-	//load test data to make inference on from file
-	getTestDataAndOthers(testData, args.num_testData, args.num_features, argv[4]);
 	clock_gettime(CLOCK_REALTIME, &startClassification);
 	ret = do_classification(valid_ctx_id, classVector, testData, args.num_testData, args.num_features, args.num_support_vectors);
 		if (ret) {
