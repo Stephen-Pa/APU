@@ -398,3 +398,4 @@ New Test
 23.102898 Watts
 New Test
 21.247330 Watts
+22.368750 Watts
