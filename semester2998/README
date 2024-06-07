@@ -1,6 +1,3 @@
-# APU
-This repository presents code for a binary Radial Basis Function (RBF) Support Vector Machine (SVM) on the APU. The APU use SVM parameters from pretrained SVMs using the scikit python libray to perform an inference on queries. Datasets are obtained from the UC Irvine Machine Learning Repository and consist of the Breast Cancer Wisconsin (Diagnostic), Sports articles for objectivity analysis, MAGIC Gamma Telescope, Spambase, and MiniBooNE particle identification datasets. 
-
 # How to Test Benchmarks
 
 NOTE: Make sure the following are completed before continuing to run the test script:
