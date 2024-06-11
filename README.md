@@ -3,7 +3,7 @@ This repository presents code for a binary Radial Basis Function (RBF) Support V
 
 # Python Files
 
-The RBF SVM implemented is based off the RBF SVM in scikit. The /semester2998/pythonParameters folder provides python code that displays the use of the scikit RBF SVM and how it functions.
+The RBF SVM implemented is based off the RBF SVM in scikit. The /semester2998/pythonParameters folder provides python code that shows the scikit RBF SVM tools and how inference is performed.
 
 NOTE: make sure all python dependencies are installed before executing any files. These dependencies are found in pythonPackages.txt in the /semester2998/pythonParameters folder.
 
